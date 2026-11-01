@@ -1,5 +1,7 @@
 # KenshiCoop
 
+> **План миграции этого форка:** [MIGRATION_PLAN.md](MIGRATION_PLAN.md) — порядок объединения активных продолжений, конфликты протоколов и критерии проверки. [Карта изменений](docs/migration/change-map.md) учитывает 101 донорскую группу. Сейчас опубликована документация миграции; код продолжений ещё не интегрирован.
+
 Setup + Demo: [https://www.youtube.com/watch?v=OqwVRRZEYGM](https://www.youtube.com/watch?v=OqwVRRZEYGM)
 
 Experimental **co-op multiplayer for [Kenshi](https://lofigames.com/)**, built as an

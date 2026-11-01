@@ -1,0 +1,401 @@
+{
+  "brandon": {
+    "target": "release/0.1.33",
+    "branches": [
+      {
+        "branch": "main",
+        "sha": "7fdea3f4cfd5021dca72015215c5667e00d40a89",
+        "ahead_of_target": 0,
+        "behind_target": 21
+      },
+      {
+        "branch": "release/0.1.33",
+        "sha": "cb5a3b9e5619bb4b51c817b3e367f4472a54d202",
+        "ahead_of_target": 0,
+        "behind_target": 0
+      }
+    ]
+  },
+  "dentro": {
+    "target": "main",
+    "branches": [
+      {
+        "branch": "chore/dev-scripts",
+        "sha": "7444aed09bafdfe3d65b9921ef0da359eb0de9ce",
+        "ahead_of_target": 0,
+        "behind_target": 65
+      },
+      {
+        "branch": "chore/rename-tokelacoop",
+        "sha": "3ebfa040f647b93ed85e0ca844c62d8ced3b9908",
+        "ahead_of_target": 0,
+        "behind_target": 37
+      },
+      {
+        "branch": "ci/windows-build",
+        "sha": "017be4a2f83ea90601fa36f6a4114791bd2f5775",
+        "ahead_of_target": 0,
+        "behind_target": 82
+      },
+      {
+        "branch": "docs/verified-in-game",
+        "sha": "97494cd42f633854bfc0c4a4eafdcc6cca3a8d3e",
+        "ahead_of_target": 0,
+        "behind_target": 68
+      },
+      {
+        "branch": "feat/dismiss-sync",
+        "sha": "97073c7bebb06b1328203ecec0114edb91aa80d5",
+        "ahead_of_target": 0,
+        "behind_target": 16
+      },
+      {
+        "branch": "feat/dismiss-wander",
+        "sha": "ac0dc02bc18e8cbeb2b38c601717f0811d64aa9d",
+        "ahead_of_target": 0,
+        "behind_target": 5
+      },
+      {
+        "branch": "feat/internet-smoothing",
+        "sha": "b3bd37b7e5aaed9f31c2a9a581b88d688f2a9c3e",
+        "ahead_of_target": 2,
+        "behind_target": 0
+      },
+      {
+        "branch": "feat/modlist-check",
+        "sha": "61baa9a538213935c787403612bde604deb034ef",
+        "ahead_of_target": 0,
+        "behind_target": 78
+      },
+      {
+        "branch": "feat/one-click-installer",
+        "sha": "9b0a57b033c35e4482d2c53fd5efe2b7c56dc477",
+        "ahead_of_target": 0,
+        "behind_target": 74
+      },
+      {
+        "branch": "feat/own-guard",
+        "sha": "ee39ec4ca8a32e817114f6273666cd4825923be0",
+        "ahead_of_target": 0,
+        "behind_target": 29
+      },
+      {
+        "branch": "feat/play-again",
+        "sha": "866e46153d1135216f6127ec69196b6e908e16a9",
+        "ahead_of_target": 0,
+        "behind_target": 11
+      },
+      {
+        "branch": "feat/simple-coop-panel",
+        "sha": "4132cab91ab7d7beb94ea8f1e71230f2a6db9d17",
+        "ahead_of_target": 0,
+        "behind_target": 71
+      },
+      {
+        "branch": "feat/squad-ledger",
+        "sha": "08f8f7aeac83ae6ab9f47c0aba5b9cf7c3dce28a",
+        "ahead_of_target": 0,
+        "behind_target": 25
+      },
+      {
+        "branch": "feat/steam-invite-button",
+        "sha": "3b3fdc2deaed13c6cbe3f25e7576879d168cdcee",
+        "ahead_of_target": 0,
+        "behind_target": 80
+      },
+      {
+        "branch": "feat/steam-join",
+        "sha": "27ddf54852a4fd658336c6e117b824e5da5b165d",
+        "ahead_of_target": 0,
+        "behind_target": 7
+      },
+      {
+        "branch": "feat/update-notice",
+        "sha": "e41c2d11ce10a68bd7553adbf95331f874a4f84e",
+        "ahead_of_target": 0,
+        "behind_target": 9
+      },
+      {
+        "branch": "feat/visible-refusal",
+        "sha": "c10e942f0a7df77c6187f5624aae0e82019b7902",
+        "ahead_of_target": 0,
+        "behind_target": 52
+      },
+      {
+        "branch": "feat/workshop",
+        "sha": "17ffc7ae04c967948bb185292d615ac763b03ade",
+        "ahead_of_target": 0,
+        "behind_target": 3
+      },
+      {
+        "branch": "feature/wanderer-x2-start",
+        "sha": "ac582ae8ee51972361a5672fc83da7a09b8b7382",
+        "ahead_of_target": 0,
+        "behind_target": 152
+      },
+      {
+        "branch": "fix/banner-off-grey",
+        "sha": "c9b2291c61f7c0ad3139d2f25803ddf0a2d93e01",
+        "ahead_of_target": 0,
+        "behind_target": 35
+      },
+      {
+        "branch": "fix/combat-damage",
+        "sha": "72a4b81d5e7e11f48cf0e0bc4ed5efb97108d37d",
+        "ahead_of_target": 0,
+        "behind_target": 46
+      },
+      {
+        "branch": "fix/exit-crash-f2-panel",
+        "sha": "b543b4f028a7771e6917e2726c18653e6962e83e",
+        "ahead_of_target": 0,
+        "behind_target": 65
+      },
+      {
+        "branch": "fix/f2-focus-only",
+        "sha": "80f01b965a13e8556f2f5376691b86750ee313e1",
+        "ahead_of_target": 0,
+        "behind_target": 60
+      },
+      {
+        "branch": "fix/host-refusal-robustness",
+        "sha": "f583012307962ed978d65849617af4d46b89a19b",
+        "ahead_of_target": 0,
+        "behind_target": 56
+      },
+      {
+        "branch": "fix/inventory-loss-stabilization",
+        "sha": "6d4dc5efc6baf9f907dc46bf05aa9d9858f78a5a",
+        "ahead_of_target": 0,
+        "behind_target": 133
+      },
+      {
+        "branch": "fix/item-transfers",
+        "sha": "48bd370652b09bf3bad941d3ebab81c3af13c337",
+        "ahead_of_target": 0,
+        "behind_target": 48
+      },
+      {
+        "branch": "fix/lobby-join-callback",
+        "sha": "ad979acecc939678cbe809622a715021731eb6be",
+        "ahead_of_target": 0,
+        "behind_target": 1
+      },
+      {
+        "branch": "fix/mods-list-paths",
+        "sha": "9867fa0a3cac88138d86d64d3a604e0e3b151448",
+        "ahead_of_target": 0,
+        "behind_target": 54
+      },
+      {
+        "branch": "fix/role-via-panel",
+        "sha": "3baf97bac1da11c7ab05d3c1d47d2a3ea6936430",
+        "ahead_of_target": 0,
+        "behind_target": 20
+      },
+      {
+        "branch": "fix/save-review",
+        "sha": "20f57ce2fd4156431903009b40bb0c0b99066da2",
+        "ahead_of_target": 0,
+        "behind_target": 14
+      },
+      {
+        "branch": "fix/save-streaming",
+        "sha": "b84c478cf570c1727e43b965ec05fc1bca1ebf75",
+        "ahead_of_target": 0,
+        "behind_target": 44
+      },
+      {
+        "branch": "fix/squad-ownership",
+        "sha": "a7feeb9c3b823de7d381fe0f1fb415a9b7d177fd",
+        "ahead_of_target": 0,
+        "behind_target": 48
+      },
+      {
+        "branch": "fix/test-templates-locale",
+        "sha": "e34995c0fff0dee20ffae414bf986d3b17568976",
+        "ahead_of_target": 0,
+        "behind_target": 42
+      },
+      {
+        "branch": "main",
+        "sha": "5a23eef86e1a62ed96b49610058292d4edd33186",
+        "ahead_of_target": 0,
+        "behind_target": 0
+      },
+      {
+        "branch": "spikes",
+        "sha": "ae44f45224976cd0c66546597b33272b7cb8c776",
+        "ahead_of_target": 0,
+        "behind_target": 188
+      }
+    ]
+  },
+  "atimal": {
+    "target": "merge-kenshiduo",
+    "branches": [
+      {
+        "branch": "chore/dev-scripts",
+        "sha": "7444aed09bafdfe3d65b9921ef0da359eb0de9ce",
+        "ahead_of_target": 0,
+        "behind_target": 228
+      },
+      {
+        "branch": "chore/rename-tokelacoop",
+        "sha": "3ebfa040f647b93ed85e0ca844c62d8ced3b9908",
+        "ahead_of_target": 0,
+        "behind_target": 200
+      },
+      {
+        "branch": "ci/windows-build",
+        "sha": "017be4a2f83ea90601fa36f6a4114791bd2f5775",
+        "ahead_of_target": 0,
+        "behind_target": 245
+      },
+      {
+        "branch": "docs/verified-in-game",
+        "sha": "97494cd42f633854bfc0c4a4eafdcc6cca3a8d3e",
+        "ahead_of_target": 0,
+        "behind_target": 231
+      },
+      {
+        "branch": "feat/modlist-check",
+        "sha": "61baa9a538213935c787403612bde604deb034ef",
+        "ahead_of_target": 0,
+        "behind_target": 241
+      },
+      {
+        "branch": "feat/one-click-installer",
+        "sha": "9b0a57b033c35e4482d2c53fd5efe2b7c56dc477",
+        "ahead_of_target": 0,
+        "behind_target": 237
+      },
+      {
+        "branch": "feat/own-guard",
+        "sha": "ee39ec4ca8a32e817114f6273666cd4825923be0",
+        "ahead_of_target": 0,
+        "behind_target": 192
+      },
+      {
+        "branch": "feat/simple-coop-panel",
+        "sha": "4132cab91ab7d7beb94ea8f1e71230f2a6db9d17",
+        "ahead_of_target": 0,
+        "behind_target": 234
+      },
+      {
+        "branch": "feat/squad-ledger",
+        "sha": "08f8f7aeac83ae6ab9f47c0aba5b9cf7c3dce28a",
+        "ahead_of_target": 0,
+        "behind_target": 188
+      },
+      {
+        "branch": "feat/steam-invite-button",
+        "sha": "3b3fdc2deaed13c6cbe3f25e7576879d168cdcee",
+        "ahead_of_target": 0,
+        "behind_target": 243
+      },
+      {
+        "branch": "feat/visible-refusal",
+        "sha": "c10e942f0a7df77c6187f5624aae0e82019b7902",
+        "ahead_of_target": 0,
+        "behind_target": 215
+      },
+      {
+        "branch": "feature/wanderer-x2-start",
+        "sha": "ac582ae8ee51972361a5672fc83da7a09b8b7382",
+        "ahead_of_target": 0,
+        "behind_target": 315
+      },
+      {
+        "branch": "fix/banner-off-grey",
+        "sha": "c9b2291c61f7c0ad3139d2f25803ddf0a2d93e01",
+        "ahead_of_target": 0,
+        "behind_target": 198
+      },
+      {
+        "branch": "fix/combat-damage",
+        "sha": "72a4b81d5e7e11f48cf0e0bc4ed5efb97108d37d",
+        "ahead_of_target": 0,
+        "behind_target": 209
+      },
+      {
+        "branch": "fix/exit-crash-f2-panel",
+        "sha": "b543b4f028a7771e6917e2726c18653e6962e83e",
+        "ahead_of_target": 0,
+        "behind_target": 228
+      },
+      {
+        "branch": "fix/f2-focus-only",
+        "sha": "80f01b965a13e8556f2f5376691b86750ee313e1",
+        "ahead_of_target": 0,
+        "behind_target": 223
+      },
+      {
+        "branch": "fix/host-refusal-robustness",
+        "sha": "f583012307962ed978d65849617af4d46b89a19b",
+        "ahead_of_target": 0,
+        "behind_target": 219
+      },
+      {
+        "branch": "fix/inventory-loss-stabilization",
+        "sha": "6d4dc5efc6baf9f907dc46bf05aa9d9858f78a5a",
+        "ahead_of_target": 0,
+        "behind_target": 296
+      },
+      {
+        "branch": "fix/item-transfers",
+        "sha": "48bd370652b09bf3bad941d3ebab81c3af13c337",
+        "ahead_of_target": 0,
+        "behind_target": 211
+      },
+      {
+        "branch": "fix/mods-list-paths",
+        "sha": "9867fa0a3cac88138d86d64d3a604e0e3b151448",
+        "ahead_of_target": 0,
+        "behind_target": 217
+      },
+      {
+        "branch": "fix/save-streaming",
+        "sha": "b84c478cf570c1727e43b965ec05fc1bca1ebf75",
+        "ahead_of_target": 0,
+        "behind_target": 207
+      },
+      {
+        "branch": "fix/squad-ownership",
+        "sha": "a7feeb9c3b823de7d381fe0f1fb415a9b7d177fd",
+        "ahead_of_target": 0,
+        "behind_target": 211
+      },
+      {
+        "branch": "fix/test-templates-locale",
+        "sha": "e34995c0fff0dee20ffae414bf986d3b17568976",
+        "ahead_of_target": 0,
+        "behind_target": 205
+      },
+      {
+        "branch": "main",
+        "sha": "d03d6005a2bcaa6aa2fe7fde4c7e9f6b74d4acf3",
+        "ahead_of_target": 0,
+        "behind_target": 184
+      },
+      {
+        "branch": "merge-kenshiduo",
+        "sha": "301d7bf75833e6a8d71aca5dc74d56d28ff9113e",
+        "ahead_of_target": 0,
+        "behind_target": 0
+      },
+      {
+        "branch": "spikes",
+        "sha": "ae44f45224976cd0c66546597b33272b7cb8c776",
+        "ahead_of_target": 0,
+        "behind_target": 351
+      },
+      {
+        "branch": "store-add",
+        "sha": "a578b43c5a5a309520afe45682a96a6f90d3f738",
+        "ahead_of_target": 0,
+        "behind_target": 47
+      }
+    ]
+  }
+}
