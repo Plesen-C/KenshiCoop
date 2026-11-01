@@ -76,10 +76,10 @@
       "source": "kotetsyy/KenshiCoop4up",
       "evidence_level": "source-code-static",
       "runtime_status": "live-code-path-inspected",
-      "description_and_evidence": "**Транспортный слой вынесен в C ABI3**: `src/transport/TransportApi.h:8`, `Provider.cpp`, `SteamBackend.cpp`, `UdpBackend.cpp`; traffic classes GAME_RELIABLE/GAME_STATE/SAVE_BULK, retained backpressure, generation на событиях; `src/plugin/net/NativeFrame.h`, `NativeValues.h`, `NetLink.cpp` принимают этот framing. Dependencies pin GNS1.6.1 `d534c19a`, protobuf21.12 `f0dc78d7` в `src/transport/dependencies.json`.",
+      "description_and_evidence": "**Transport extracted behind C ABI 3**: `src/transport/TransportApi.h:8`, Provider.cpp, SteamBackend.cpp, UdpBackend.cpp; GAME_RELIABLE/GAME_STATE/SAVE_BULK traffic classes, retained backpressure, event generations. `src/plugin/net/NativeFrame.h`, NativeValues.h and NetLink.cpp consume this framing. Dependencies pin GNS 1.6.1 `d534c19a` and protobuf 21.12 `f0dc78d7` in src/transport/dependencies.json.",
       "savas_overlap_and_integration": [
-        "Нет; у Savas NetLink остаётся ENet/Steam tunnel.",
-        "**Поздний backend**, не merge целого NetLink поверх Savas. Нужен единый Transport interface и общий DTO codec; сохранить ENet для сравнения/регрессии. Modern provider не должен переносить STL/CRT ownership через v100 boundary."
+        "Absent from Savas, which retains ENet/Steam tunnel NetLink.",
+        "Late backend migration, not a wholesale NetLink merge over Savas. Define a Transport interface and shared DTO codec; retain ENet for regression comparison. Do not transfer STL/CRT ownership across the modern-provider/v100 boundary."
       ]
     },
     {
@@ -87,10 +87,10 @@
       "source": "kotetsyy/KenshiCoop4up",
       "evidence_level": "source-code-static",
       "runtime_status": "live-code-path-inspected",
-      "description_and_evidence": "**Модульное native UI API4**: `src/ui/CoopUiApi.h:5`, `CoopUi.cpp`, `src/plugin/core/UiModule.cpp`; snapshot/command POD, UI callbacks только ставят команду, core исполняет её на game thread. Локализованные поля, lifecycle status/diagnostics, redact exporter в `UiPrivacy.h`.",
+      "description_and_evidence": "**Modular native UI API 4**: src/ui/CoopUiApi.h:5, CoopUi.cpp, src/plugin/core/UiModule.cpp; POD snapshots/commands. UI callbacks enqueue commands; core executes them on the game thread. Localized fields, lifecycle status/diagnostics and a redacting exporter in UiPrivacy.h.",
       "savas_overlap_and_integration": [
-        "Нет этого UI; Savas имеет свой engine MyGUI multiplayer lobby.",
-        "Портировать представление через adapter к общему Session API. Не грузить две конкурирующие панели/два connect flow одновременно."
+        "Savas has its own engine MyGUI multiplayer lobby, not this UI.",
+        "Adapt the view to a shared Session API. Avoid competing panels and independent connection flows."
       ]
     },
     {
@@ -98,10 +98,10 @@
       "source": "kotetsyy/KenshiCoop4up",
       "evidence_level": "source-code-static",
       "runtime_status": "live-code-path-inspected",
-      "description_and_evidence": "**Четырёхкомпонентное обновление**: `src/plugin/net/Updater.cpp:234` fetch manifest; `UpdatePackage.*` parsePackageManifest/installPackage/recoverPackageForStartup, verified hashes, version ordering, rollback marker; `RuntimeImages.h` блокирует runtime loads во время replacement.",
+      "description_and_evidence": "**Four-component updater**: src/plugin/net/Updater.cpp:234 fetches a manifest; UpdatePackage.* parses/installs/recovers packages with verified hashes, version ordering and rollback marker. RuntimeImages.h blocks runtime loads during replacement.",
       "savas_overlap_and_integration": [
-        "Нет этой инфраструктуры.",
-        "Отдельная packaging-задача после стабилизации backend. Feed owner/repo и binary ABI нельзя оставлять kotetsyy при переносе в новый продукт."
+        "Absent from Savas.",
+        "Separate packaging task after backend stabilization. Replace donor feed owner/repository and align all binary ABIs."
       ]
     },
     {
@@ -109,10 +109,10 @@
       "source": "kotetsyy/KenshiCoop4up",
       "evidence_level": "source-code-static",
       "runtime_status": "live-code-path-inspected",
-      "description_and_evidence": "**N-player membership/roster/incarnations**: Wire.h MAX_PLAYERS4/MAX_JOINS3, PKT_PLAYER_ROSTER49, SESSION_ACK51; `NetLink.cpp`, `NativeFrame.h`, `OwnRanks.h:51`; peer slot reuse и relay origin bound к текущей incarnation.",
+      "description_and_evidence": "**N-player membership/roster/incarnations**: Wire.h MAX_PLAYERS=4/MAX_JOINS=3, PKT_PLAYER_ROSTER=49, SESSION_ACK=51; NetLink.cpp, NativeFrame.h, OwnRanks.h:51. Peer-slot reuse and relay origin are bound to the current incarnation.",
       "savas_overlap_and_integration": [
-        "Частично: Savas уже N-player, owner validation, Steam roster/persistent squad ownership, но другой контракт.",
-        "**Не заменять существующий Savas registry**. Извлекать membership fence/peer-retirement инварианты и тесты; сохранять единый PlayerId, campaign identity и отдельную connection incarnation."
+        "Partial overlap: Savas already has N-player topology, owner validation and persistent Steam squad ownership, with a different contract.",
+        "Keep one Savas-derived registry. Extract membership fences, peer-retirement invariants and tests; separate PlayerId/campaign identity from connection incarnation."
       ]
     },
     {
@@ -120,10 +120,10 @@
       "source": "kotetsyy/KenshiCoop4up",
       "evidence_level": "source-code-static",
       "runtime_status": "live-code-path-inspected",
-      "description_and_evidence": "**World/load readiness barrier**: Wire PKT_WORLD_READY50 + LoadGo.worldToken + TimePacket.readyLoadId; `Plugin.cpp:267`, `1974`, `SaveXfer.cpp`; после native load ждёт procedural reconciliation/READY, а не просто успешного скачивания сейва.",
+      "description_and_evidence": "**World/load readiness barrier**: PKT_WORLD_READY=50, LoadGo.worldToken, TimePacket.readyLoadId; Plugin.cpp:267/1974 and SaveXfer.cpp. After native load, wait for procedural reconciliation/READY rather than just successful save download.",
       "savas_overlap_and_integration": [
-        "Есть bootstrap/save/load у Savas, но не этот worldToken+procedural-ready контракт.",
-        "Портировать как центральный state machine, до любых новых world channels; одинаково для всех transport backends. Не завязывать correctness на включённость user-facing speed/time sync."
+        "Savas has bootstrap/save/load handling but not this worldToken/procedural-ready contract.",
+        "Port a central state machine before new world channels, shared by every transport. Correctness must not depend on whether user-facing time/speed sync is enabled."
       ]
     },
     {
@@ -131,10 +131,10 @@
       "source": "kotetsyy/KenshiCoop4up",
       "evidence_level": "source-code-static",
       "runtime_status": "live-code-path-inspected",
-      "description_and_evidence": "**Полные inventory snapshots с staging**: Wire.h:609 count u16, revision/offset/totalCount/digest, rows64/frame, total4096, parentIdx u16, grid section/x/y; `core/InventorySnapshotAssembler.h:58`, `InventorySnapshotRevision.h`; `Inbound.h` собирает полный снимок прежде чем отдаёт replicator.",
+      "description_and_evidence": "**Complete staged inventory snapshots**: Wire.h:609 uses u16 count, revision/offset/totalCount/digest, 64 rows/frame, 4096 total, u16 parentIdx and grid section/x/y. core/InventorySnapshotAssembler.h:58 and InventorySnapshotRevision.h; Inbound.h assembles a complete snapshot before handing it to the replicator.",
       "savas_overlap_and_integration": [
-        "Нет; Savas snapshot остаётся исходной формы/лимитов.",
-        "Переносить единым codec+assembler+engine application изменением, включая bound validation, parent matching и новый handshake/schema. Нельзя поднять один count без downstream stack/buffer audit."
+        "Absent from Savas, which retains the original snapshot shape/limits.",
+        "Port codec, assembler and engine application together, including bounds, parent matching and handshake/schema. Raising only the count requires a downstream stack/buffer audit."
       ]
     },
     {
@@ -142,10 +142,10 @@
       "source": "kotetsyy/KenshiCoop4up",
       "evidence_level": "source-code-static",
       "runtime_status": "live-code-path-inspected",
-      "description_and_evidence": "**Host-authoritative native shop / extraction transactions**: `game/InventoryTransactionBridge.h`, `InventoryTransactionRules.h`; `ReplicatorItems.cpp:1906` собирает NativeShopIntent, `commitNativeShopTransaction` исполняет HOST, sourceRevision/actorRevision, replay conflict, quote ceiling/floor, checkpoint+ACK.",
+      "description_and_evidence": "**Host-authoritative native shop/extraction transactions**: game/InventoryTransactionBridge.h and InventoryTransactionRules.h; ReplicatorItems.cpp:1906 builds NativeShopIntent. Host commitNativeShopTransaction checks sourceRevision/actorRevision, replay conflicts, quote ceiling/floor and checkpoint/ACK.",
       "savas_overlap_and_integration": [
-        "Savas65 имеет **альтернативную** merchant window lock + touched-line absolute-count handover (`TradeHeader`, ReplicatorItems::sendTradeOp/tickTrade), не то же решение.",
-        "Выбрать единый transaction coordinator. Нельзя запускать оба native hooks и оба handlers: они дважды учтут предмет/дебет. Вначале спроектировать canonical transaction ID, item identity, payer policy, outcome journal; потом перенести tests/pure policies."
+        "Alternative to Savas65 merchant-window lock and absolute touched-line handover (TradeHeader, sendTradeOp/tickTrade).",
+        "Select one transaction coordinator. Two sets of native hooks/handlers could count the same item/debit twice. Define transaction ID, item identity, payer policy and outcome journal before extracting tests/pure policies."
       ]
     },
     {
@@ -153,10 +153,10 @@
       "source": "kotetsyy/KenshiCoop4up",
       "evidence_level": "source-code-static",
       "runtime_status": "live-code-path-inspected",
-      "description_and_evidence": "**Inventory/cursor lifetime и conservation**: `EngineInventory.cpp`, `EngineInternal.cpp`, `ReplicatorItems.cpp`; `InventorySnapshotRevision::accept` одноразово применяет committed state к own pocket; actor checkpoint equivalent сравнивает quantities/parents, игнорирует incidental grid packing.",
+      "description_and_evidence": "**Inventory/cursor lifetime and conservation**: EngineInventory.cpp, EngineInternal.cpp, ReplicatorItems.cpp. InventorySnapshotRevision::accept applies committed state once to an owned pocket; checkpoint equivalence compares quantities/parents while ignoring incidental grid packing.",
       "savas_overlap_and_integration": [
-        "Частично: Savas имеет свои inventory transfer/save/native item fixes, но этих staged checkpoint policies нет.",
-        "Хороший ранний кандидат после minimal reproduction на Savas. Портировать отдельный инвариант и regression, не целый файл на2500+ changed lines."
+        "Partial overlap: Savas has inventory transfer/save/native-item fixes but not these staged checkpoint policies.",
+        "Port individual invariants with a reproduction on Savas instead of replacing an entire file with more than 2500 changed lines."
       ]
     },
     {
@@ -164,10 +164,10 @@
       "source": "kotetsyy/KenshiCoop4up",
       "evidence_level": "source-code-static",
       "runtime_status": "live-code-path-inspected",
-      "description_and_evidence": "**Host-версионированные замки/двери**: `sync/LockAuthority.h:6`, `ReplicatorChannels.cpp:923` publishDoors/applyDoors; peer requests не двигают durable clock, parentHand+doorIndex в DoorPacket, сохраняется authoritative lock после convergence/unload.",
+      "description_and_evidence": "**Host-versioned locks/doors**: sync/LockAuthority.h:6, ReplicatorChannels.cpp:923 publishDoors/applyDoors. Peer requests do not advance the durable clock; DoorPacket has parentHand/doorIndex. Authoritative lock survives convergence/unload.",
       "savas_overlap_and_integration": [
-        "Есть door/lock sync, но не этот authority/revision слой.",
-        "Извлечь pure admission и adapter; требуется общий fixture identity (с учётом Ximery identity fixes). Обязательны lockpick обеих сторон, stale replay/rejoin, parentless placed door."
+        "Savas has door/lock sync without this authority/revision layer.",
+        "Extract pure admission policy and an adapter. Requires shared fixture identity, including Ximery-related identity fixes. Test both players lockpicking, stale replay/rejoin and parentless placed doors."
       ]
     },
     {
@@ -175,10 +175,10 @@
       "source": "kotetsyy/KenshiCoop4up",
       "evidence_level": "source-code-static",
       "runtime_status": "live-code-path-inspected",
-      "description_and_evidence": "**Carried body drop/landing pose и bed retention**: EventPacket poseValid+x/y/z/heading, DROP_ARG_LANDING; `ReplicatorDrive.cpp:213`, `EngineSpawnCombat.cpp`, `EngineInternal.cpp`, `applyFurniture` handling; для отсутствующей fixture допускается guarded materialization только у accepted actor.",
+      "description_and_evidence": "**Carried-body drop/landing pose and bed retention**: EventPacket poseValid/x/y/z/heading, DROP_ARG_LANDING; ReplicatorDrive.cpp:213, EngineSpawnCombat.cpp, EngineInternal.cpp, applyFurniture. Missing fixtures allow guarded materialization only for an accepted actor.",
       "savas_overlap_and_integration": [
-        "Savas58.1 тоже содержит carry/bed/NPC corrections, однако другой код и wire.",
-        "Семантический overlap: сначала сравнить конкретный repro; объединять исправления по симптомам, не по похожим именам. Fixture materialization требует доказательства provenance/conservation."
+        "Savas58.1 also fixes carry/bed/NPC behavior, using different code and wire.",
+        "Deduplicate using concrete reproductions. Fixture materialization requires proven provenance/conservation."
       ]
     },
     {
@@ -186,10 +186,10 @@
       "source": "kotetsyy/KenshiCoop4up",
       "evidence_level": "source-code-static",
       "runtime_status": "live-code-path-inspected",
-      "description_and_evidence": "**Процедурные camp-bed регионы**: `EngineProcedural.cpp`, `ProceduralWorldSync.cpp`, `core/ProceduralWorldState.h`; BEGIN/ROW/END/ACK/RETIRE/SCOPE_COMMIT, world/load/region/epoch/digest, quantized descriptors, complete native census fence. Подключено в Plugin, категория строго PROC_CATEGORY_CAMP_BED.",
+      "description_and_evidence": "**Procedural camp-bed regions**: EngineProcedural.cpp, ProceduralWorldSync.cpp, core/ProceduralWorldState.h; BEGIN/ROW/END/ACK/RETIRE/SCOPE_COMMIT, world/load/region/epoch/digest, quantized descriptors and complete-native-census fence. Wired into Plugin, strictly limited to PROC_CATEGORY_CAMP_BED.",
       "savas_overlap_and_integration": [
-        "Нет.",
-        "Поздний optional world channel; readiness lifecycle зависит от K05 и canonical fixture IDs. Это не универсальный sync всех процедурных объектов."
+        "Absent from Savas.",
+        "Later optional world channel. Readiness depends on K05 and canonical fixture IDs. This is not universal synchronization of procedural objects."
       ]
     },
     {
@@ -197,10 +197,10 @@
       "source": "kotetsyy/KenshiCoop4up",
       "evidence_level": "source-code-static",
       "runtime_status": "experimental-disabled-in-public",
-      "description_and_evidence": "**EnvironmentItemsSync — эксперимент, выключен в public**: `Plugin.cpp:76` возвращает false вне HARNESS; Harness требует KENSHICOOP_ENVIRONMENT_ITEMS=1. Реальная реализация `EnvironmentItemsSync.cpp`, `EngineEnvironmentItems.cpp`, EnvironmentItemsState/EnvironmentItemPacket.",
+      "description_and_evidence": "**EnvironmentItemsSync is experimental and disabled in public Release**: Plugin.cpp:76 returns false outside HARNESS; Harness also requires KENSHICOOP_ENVIRONMENT_ITEMS=1. Implemented by EnvironmentItemsSync.cpp, EngineEnvironmentItems.cpp, EnvironmentItemsState/EnvironmentItemPacket.",
       "savas_overlap_and_integration": [
-        "Нет.",
-        "Сохранить как экспериментальный feature flag/исходники и тесты; не включать публично по факту наличия кода."
+        "Absent from Savas.",
+        "Preserve behind an experimental flag with tests; code presence does not justify public enablement."
       ]
     },
     {
@@ -208,10 +208,10 @@
       "source": "kotetsyy/KenshiCoop4up",
       "evidence_level": "source-code-static",
       "runtime_status": "live-code-path-inspected",
-      "description_and_evidence": "**Иные money/speed policies**: `ReplicatorChannels.cpp:712,808` broadcast Money.ackSeq0 и guests adopt total; pending-reapply убран. `SpeedAdmission.h` принимает SPEED_COMMAND, latest host-sequenced real action, не старые heartbeat votes; cap combat убран в этой ветви.",
+      "description_and_evidence": "**Alternative money/speed policies**: ReplicatorChannels.cpp:712/808 broadcasts Money.ackSeq=0; guests adopt total and pending reapply is removed. SpeedAdmission.h accepts SPEED_COMMAND, using the latest host-sequenced real action rather than heartbeat votes; combat cap was removed.",
       "savas_overlap_and_integration": [
-        "Конфликт: Savas shared pool с per-ownerACK и pending reconciliation; speed consensus.",
-        "Для shared economy **предпочесть строгий per-ownerACK Savas**, а не упрощать до ack0. Скорость оформить выбранным campaign policy; сохранить оба UX режима, один active handler."
+        "Conflicts with Savas shared-pool per-owner ACK/pending reconciliation and speed consensus.",
+        "Keep strict Savas per-owner ACK for shared money. Make speed arbitration an explicit campaign policy with one active handler."
       ]
     },
     {
@@ -219,9 +219,9 @@
       "source": "Vep124/KenshiCoop-ours",
       "evidence_level": "source-code-static",
       "runtime_status": "live-code-path-inspected",
-      "description_and_evidence": "**Публичный Steam server browser**: `net/SteamInvite.cpp:350` refreshServerRow/onLobbyMatchList; dynamic optional RequestLobbyList/GetLobbyByIndex/AddRequestLobbyListStringFilter, фильтр `kc_game=KenshiCoop`, name/players/password/compatible, до16 строк; `browseServers`, `joinServer`, `hostPublicServer` создаёт **2-player public lobby**.",
+      "description_and_evidence": "**Public Steam server browser**: net/SteamInvite.cpp:350 refreshServerRow/onLobbyMatchList; optional RequestLobbyList/GetLobbyByIndex/AddRequestLobbyListStringFilter, kc_game=KenshiCoop filter, name/players/password/compatibility, up to 16 rows. browseServers/joinServer/hostPublicServer create a two-player public lobby.",
       "savas_overlap_and_integration": [
-        "Savas есть Steam friend lobby/invites, но browser functions/metadata этого форка отсутствуют. Портировать как discovery provider к Session API Savas, заменить hard-coded2 на единый session limit, фильтровать schema/version/capabilities."
+        "Savas has friend lobbies/invites but lacks these browser functions/metadata. Port discovery to its Session API, replace the hard-coded two-player limit and filter schema/version/capabilities."
       ]
     },
     {
@@ -229,9 +229,9 @@
       "source": "Vep124/KenshiCoop-ours",
       "evidence_level": "source-code-static",
       "runtime_status": "live-code-path-inspected",
-      "description_and_evidence": "**F10 MULTIPLAYER panel + сохранение LAN settings**: `game/MultiplayerUi.cpp` (789строк), `MultiplayerUi.h`, Plugin.cpp подключение; `core/Config.cpp` serverName/password/LAN values; исходная F2 сохраняется.",
+      "description_and_evidence": "**F10 MULTIPLAYER panel and persistent LAN settings**: game/MultiplayerUi.cpp (789 lines), MultiplayerUi.h and Plugin wiring; core/Config.cpp stores serverName/password/LAN values. Original F2 remains.",
       "savas_overlap_and_integration": [
-        "Альтернативный UX к Savas/KotetsUI. Переносить browser/password controls в выбранную общую UI, не второй independent connect owner."
+        "Alternative UI to Savas/Kotets. Move browser/password controls into the selected UI, not a second independent connection owner."
       ]
     },
     {
@@ -239,9 +239,9 @@
       "source": "Vep124/KenshiCoop-ours",
       "evidence_level": "source-code-static",
       "runtime_status": "live-code-path-inspected",
-      "description_and_evidence": "**Handshake refusal + password gate**: `Wire.h` protocol57, Hello.pwHash, PKT_AUTH_FAIL250, AuthFailPacket.reason/peerVersion; `passwordHash64` — **несолёный FNV-1a64**, не криптографическая authentication. `NetLink.cpp` посылает reliable отказ, flush/disconnect_later, latch authFailed останавливает reconnect; CONNECT сбрасывает latch.",
+      "description_and_evidence": "**Handshake refusal and password gate**: Wire.h protocol 57, Hello.pwHash, PKT_AUTH_FAIL=250, AuthFailPacket.reason/peerVersion. passwordHash64 is unsalted FNV-1a64, not cryptographic authentication. NetLink.cpp sends reliable refusal, flush/disconnect_later; authFailed latches stop reconnect and CONNECT clears the latch.",
       "savas_overlap_and_integration": [
-        "Refusal reason/latch полезны отдельно от password design. Нельзя переносить FNV как защиту публичного сервера: это replayable bearer-equivalent hash. Нужен отдельный согласованный auth contract (challenge/nonce либо проверяемый transport identity), а тексты wrong password/version — общий error model."
+        "Refusal reasons/latches are useful separately from password design. Do not reuse FNV as public-server protection: the hash is replayable bearer-equivalent data. Define authentication through a reviewed challenge/nonce or authenticated transport identity, and use one error model for password/version failures."
       ]
     },
     {
@@ -249,9 +249,9 @@
       "source": "ProvodD-min/KenshiCoop-private-squads",
       "evidence_level": "source-code-static",
       "runtime_status": "live-code-path-inspected",
-      "description_and_evidence": "**Persistent anonymous player slots0..8**: `netproto/SessionSlots.h::assign/restore` максимум8 guest bindings; Hello.clientTokenLo/Hi, Welcome.privateWorld*; `core/Config.cpp:110` coop_user.dat, `net/NetLink.cpp:698,758`; `sync/PlayerSlotSession.h` checksummed KCOOP_PLAYERS_1 sidecar `coop_players.dat`. Слоты сохраняются для offline players.",
+      "description_and_evidence": "**Persistent anonymous slots 0–8**: netproto/SessionSlots.h::assign/restore supports eight guest bindings; Hello.clientTokenLo/Hi and Welcome.privateWorld*. core/Config.cpp:110 uses coop_user.dat, NetLink.cpp:698/758; sync/PlayerSlotSession.h stores checksummed KCOOP_PLAYERS_1 coop_players.dat. Offline players retain slots.",
       "savas_overlap_and_integration": [
-        "Альтернатива Savas SteamId→rank, а не дополнительная map поверх него. Нужен единый logical PlayerIdentity (Steam/user token transports отдельно) и explicit reassignment/import; неизвестный новый гость не должен наследовать чужие кошелёк/репутацию автоматически. Token не является сильным authentication доказательством."
+        "Alternative to Savas SteamId-to-rank mapping. Define one logical PlayerIdentity with transport-specific Steam/token identities and explicit reassignment/import. A new guest must not silently inherit another player’s wallet/reputation. The token is not strong authentication."
       ]
     },
     {
@@ -259,9 +259,9 @@
       "source": "ProvodD-min/KenshiCoop-private-squads",
       "evidence_level": "source-code-static",
       "runtime_status": "live-code-path-inspected",
-      "description_and_evidence": "**Private squad ownership + UI enforcement + recruitment routing**: `PrivateSquadSession::capture/restoreForSlot` checksummed KCSQ002 `coop_squads.dat`, durable per-body ownerSlot; `PrivateSquadUi.h` фильтрует native tabs/management, peer inspect не добавляет в selectedCharacters; `PrivateRecruit.h`, `ReplicatorSpawn.cpp`, `EngineWorld.cpp` route recruit и rekey; `GuestRosterPlan.h`/GuestRosterSession создают missing logical guest bodies на host, ограничивают retries, ждут durable pin.",
+      "description_and_evidence": "**Private squad ownership, UI enforcement and recruit routing**: PrivateSquadSession::capture/restoreForSlot stores checksummed KCSQ002 coop_squads.dat with durable per-body ownerSlot. PrivateSquadUi.h filters tabs/management and peer inspection does not add selectedCharacters. PrivateRecruit.h, ReplicatorSpawn.cpp and EngineWorld.cpp route recruits/rekeys. GuestRosterPlan/Session create missing logical guest bodies on host, bound retries and wait for durable pinning.",
       "savas_overlap_and_integration": [
-        "Savas уже persistent squad assignment, но управление через свой registry и общую native faction. Портировать policy/ownership validation, не дублировать body pins. Приватные UI tabs и inspect restrictions optional presentation policy."
+        "Savas already persists squad assignment using its registry and shared native faction. Port ownership policy/validation without duplicating body pins. Private-tab presentation and inspect restrictions are optional policies."
       ]
     },
     {
@@ -269,9 +269,9 @@
       "source": "ProvodD-min/KenshiCoop-private-squads",
       "evidence_level": "source-code-static",
       "runtime_status": "live-code-path-inspected",
-      "description_and_evidence": "**Раздельные кошельки с durable cut**: `SeparateWallet.h`/`SeparateWalletSession.h::tick,setBalance,vendorBegin,vendorFinish,readyForSave`; balance per slot, epoch+exact-next sequences, reconnect replay и pending ACK, новый guest native wallet0 до snapshot; `coop_wallets.dat` в coordinated save, сохранение временным файлом+FlushFileBuffers+MoveFileEx. Plugin.privateWalletMode выключает Replicator shared money sampler.",
+      "description_and_evidence": "**Separate wallets with a durable checkpoint**: SeparateWallet/SeparateWalletSession::{tick,setBalance,vendorBegin,vendorFinish,readyForSave}; per-slot balance, epoch/exact-next sequence, reconnect replay and pending ACK. A new guest has native wallet zero until snapshot. coop_wallets.dat joins the coordinated save; temp-file, FlushFileBuffers and MoveFileEx commit. Plugin.privateWalletMode disables shared-money sampling.",
       "savas_overlap_and_integration": [
-        "**Прямой конфликт shared wallet Savas/Kotets/nhoral**. Ввести EconomyPolicy shared/private, выбрать до создания кампании и хранить в manifest; миграция требует явного allocation rule. Native vendor debit должен вызывать единственный Economy service."
+        "Direct conflict with Savas/Kotets/nhoral shared money. Select EconomyPolicy shared/private before campaign creation and persist it in a manifest. Migration needs an explicit allocation rule. Native vendor debits must call one Economy service."
       ]
     },
     {
@@ -279,9 +279,9 @@
       "source": "ProvodD-min/KenshiCoop-private-squads",
       "evidence_level": "source-code-static",
       "runtime_status": "live-code-path-inspected",
-      "description_and_evidence": "**Personal faction relations/crime consequences**: `PrivateFactionNative.h` hooks, `PrivateFactionLedger/Session/Snapshot`, `netproto/PrivateFactionWire.h` и pending causes; owner/direction/sequence, world nonce/load fence/READY, host authoritative legal cause→owner row+ACK, `coop_factions.dat`. Plugin.cpp:2665 включает по умолчанию в private squads non-scenario mode.",
+      "description_and_evidence": "**Personal faction relations/crime consequences**: PrivateFactionNative hooks and PrivateFactionLedger/Session/Snapshot, netproto/PrivateFactionWire.h and pending causes. Owner/direction/sequence, world nonce/load fence/READY, host-authoritative legal cause→owner row/ACK, coop_factions.dat. Plugin.cpp:2665 enables this by default for private squads outside scenarios.",
       "savas_overlap_and_integration": [
-        "У Savas общие faction/bounty sync corrections, но не personal relationship histories. Большой optional gameplay mode, нужен authoritative event owner и persistence migration; смешивание двух faction hooks даст двойные последствия."
+        "Savas has shared faction/bounty corrections but no personal relationship history. Large optional gameplay policy requiring authoritative event ownership and persistence migration. Two faction-hook paths would apply consequences twice."
       ]
     },
     {
@@ -289,9 +289,10 @@
       "source": "ProvodD-min/KenshiCoop-private-squads",
       "evidence_level": "source-code-static",
       "runtime_status": "live-code-path-inspected",
-      "description_and_evidence": "**Vendor64/65/66 atomic trade coordinator**: `VendorCoordinator64.h`, `VendorLedger64.h`, `VendorTypes64.h`, `VendorProtocol64.h`; lease/grant/state/ack/release/busy, complete chunked stock records+cash+walletBefore/After/seq+actor inventoryHash/world/generation/revision. `EngineVendor64.inl::installVendorHooks64` hooks ShopTrader ctor/dtor, RClickAutoTrade, place/pickup mouse item, ActivePlatoon::refreshInventory. Restock schedule66 и exact native inventory ACK завершают cut; `coop_vendors.dat`. Plugin.cpp:2148 требует **native hooks + separateMoney** для этой торговли.",
+      "description_and_evidence": "**Vendor64/65/66 atomic trade coordinator**: VendorCoordinator64/Ledger64/Types64/Protocol64; lease/grant/state/ack/release/busy, complete chunked stock plus cash, walletBefore/After/seq and actor inventoryHash/world/generation/revision. EngineVendor64.inl::installVendorHooks64 hooks ShopTrader ctor/dtor, RClickAutoTrade, mouse pickup/placement and ActivePlatoon::refreshInventory. Restock schedule66 and exact native-inventory ACK complete the checkpoint; coop_vendors.dat. Plugin.cpp:2148 requires native hooks and separateMoney.",
       "savas_overlap_and_integration": [
-        "Конкурирует с Savas65 touched-line handover и Kotets host native transaction replay. Это **три реализации одной ответственности**. Не переносить совместно. Сначала единый merchant/stock identity, transaction journal и Economy API; адаптировать полезные complete-stock/wallet atomicity/restock invariants, отдельно доказать price/authorship."
+        "Competes with Savas65 touched-line handover and Kotets host-native transactions: three implementations of one responsibility.",
+        "Define one merchant/stock identity, transaction journal and Economy API. Adapt complete-stock/wallet atomicity/restock invariants and separately establish pricing/authorship; do not activate all three coordinators."
       ]
     },
     {
@@ -299,9 +300,9 @@
       "source": "ProvodD-min/KenshiCoop-private-squads",
       "evidence_level": "source-code-static",
       "runtime_status": "live-code-path-inspected",
-      "description_and_evidence": "**Item charges/uniqueness/theft ownership + точный inventory convergence**: Wire.InvItemEntry chargesRemaining/nativeUnique/properOwner[5]; `ItemCharges.h`, `EngineInventory.cpp:534::reconcileChargedItems`, `planItemCharges`, `sameInventoryMetadata64`, `captureContainerDigest64`. Код сначала reuse/equip существующие native items, освобождает grid space, затем creates additions; failure удаляет только created items, rollback moves/qty/charges. Фикс .5.3.1 действительно присутствует.",
+      "description_and_evidence": "**Item charges, uniqueness, theft ownership and exact inventory convergence**: InvItemEntry adds chargesRemaining/nativeUnique/properOwner[5]. ItemCharges.h, EngineInventory.cpp:534::reconcileChargedItems, planItemCharges, sameInventoryMetadata64, captureContainerDigest64. Reuse/equip native items first, free grid space, then create additions. Failure removes only newly created items and rolls back moves/quantity/charges. The .5.3.1 fix is present in source.",
       "savas_overlap_and_integration": [
-        "Savas не имеет этих wire fields/charge reconcile. Полезный независимый доменный порт, но item identity/hash/equality должны включать новые поля везде (snapshot, transfers, vendor, save, tests). Согласовать с Kotets grid/parent4096 и не копировать фиксированные64 scratch arrays без изменения лимитов."
+        "Savas lacks these wire fields/charge reconciliation. Port item identity/hash/equality consistently across snapshots, transfers, vendors, saves and tests. Coordinate with Kotets 4096-item/grid/parent support; do not copy fixed 64-entry scratch arrays without auditing limits."
       ]
     },
     {
@@ -309,9 +310,9 @@
       "source": "ProvodD-min/KenshiCoop-private-squads",
       "evidence_level": "source-code-static",
       "runtime_status": "live-code-path-inspected",
-      "description_and_evidence": "**Медицинские signed levels**: `MedicalWire.h`, TreatmentPacket.partMask+partBand[]; engine treatment apply использует mask, а не sentinel «-1 значит не применить».",
+      "description_and_evidence": "**Signed medical levels**: MedicalWire.h and TreatmentPacket.partMask/partBand[]. Engine treatment applies a mask instead of treating -1 as a “do not apply” sentinel.",
       "savas_overlap_and_integration": [
-        "Нет такой структуры в Savas65. Узкий кандидат, но wire bump; тесты negative valid level, mask bound, partial limbs, NaN, повтор treatment."
+        "Savas65 lacks this structure. A narrow port requiring a wire change; test legitimate negative levels, mask bounds, partial limbs, NaN and repeated treatment."
       ]
     },
     {
@@ -319,9 +320,9 @@
       "source": "ProvodD-min/KenshiCoop-private-squads",
       "evidence_level": "source-code-static",
       "runtime_status": "live-code-path-inspected",
-      "description_and_evidence": "**Host relay policy + chat/display names**: `PacketRoute.h` hostOnly/guestRequestOnly/senderMatches/validRelay, строгие len/bounds/medical validations; ChatPacket49, PlayerName50 и `ChatText.h`; NetLink relay не должен принимать ложный ownerId или blindly forward authority messages. Имена независимы от Steam.",
+      "description_and_evidence": "**Host relay policy, chat and display names**: PacketRoute.h hostOnly/guestRequestOnly/senderMatches/validRelay, strict length/bounds/medical validation; ChatPacket=49, PlayerName=50 and ChatText.h. NetLink rejects forged ownerId and must not blindly forward authority messages. Names are independent of Steam.",
       "savas_overlap_and_integration": [
-        "Savas уже имеет свой N-player relay/authorship model, но строгий policy seam — полезная спецификация и negative-test source. Сохранить один registry/owner lookup, не внедрять второй route table со старым enum."
+        "Savas has its own N-player relay/authorship model. Reuse the policy boundary as a specification and negative-test source; keep one registry/owner lookup rather than adding a second routing table with an old enum."
       ]
     },
     {
@@ -329,9 +330,9 @@
       "source": "ProvodD-min/KenshiCoop-private-squads",
       "evidence_level": "source-code-static",
       "runtime_status": "live-code-path-inspected",
-      "description_and_evidence": "**Last-action speed intent**: `SharedSpeed.h::receive` принимает SPEED_USER_INTENT, telemetry не перезаписывает последнее реальное действие; optional combat cap через effective(combat,cap).",
+      "description_and_evidence": "**Last-action speed intent**: SharedSpeed.h::receive accepts SPEED_USER_INTENT; telemetry cannot overwrite the last real action. Optional combat cap through effective(combat,cap).",
       "savas_overlap_and_integration": [
-        "Альтернативно Savas min-vote consensus. Один выбранный SpeedPolicy, одинаковая сериализация user intent/heartbeat. Не комбинировать min-vote и last-action handlers."
+        "Alternative to Savas minimum-vote consensus. Select one SpeedPolicy with consistent user-intent/heartbeat serialization. Do not run minimum-vote and last-action handlers together."
       ]
     },
     {
@@ -339,9 +340,9 @@
       "source": "ProvodD-min/KenshiCoop-private-squads",
       "evidence_level": "source-code-static",
       "runtime_status": "live-code-path-inspected",
-      "description_and_evidence": "**Coordinated persistence fences**: Plugin.before-save guard, player/squad/wallet/faction/vendor frozen snapshots; `SaveXfer.cpp` переносит sidecars вместе с native world/fingerprint и не публикует неконсистентный cut. Save блокируется при unacked vendor/faction/money.",
+      "description_and_evidence": "**Coordinated persistence fences**: Plugin before-save guard freezes player/squad/wallet/faction/vendor snapshots. SaveXfer.cpp transfers sidecars with the native world/fingerprint and avoids publishing an inconsistent checkpoint. Unacknowledged vendor/faction/money operations block saving.",
       "savas_overlap_and_integration": [
-        "У Savas есть save safety fixes, но этого набора sidecars/atomic domain capture нет. Взять explicit PrepareSave/Capture/Commit service с all-or-nothing manifest. Нельзя переносить только отдельный .dat без lifecycle hooks/rollback и fingerprint coverage."
+        "Savas has save-safety fixes but not this sidecar/domain-atomic capture. Define PrepareSave/Capture/Commit with an all-or-nothing manifest. A .dat file alone is insufficient without lifecycle hooks, rollback and fingerprint coverage."
       ]
     },
     {
@@ -349,9 +350,9 @@
       "source": "ProvodD-min/KenshiCoop-private-squads",
       "evidence_level": "source-code-static",
       "runtime_status": "prototype-not-live",
-      "description_and_evidence": "**Canonical identity/protocol-next foundation НЕ live**: `CanonicalWire.h:1`, `CanonicalControl.h`, `CanonicalRekey.h`, `RuntimeIdentity*.h`, `CanonicalTransport.h:1` прямо «Not installed in NetLink»; нет использования Adapter в live NetLink.",
+      "description_and_evidence": "**Canonical identity/protocol-next foundation is not live**: CanonicalWire.h:1, CanonicalControl.h, CanonicalRekey.h, RuntimeIdentity*.h and CanonicalTransport.h:1 explicitly state “Not installed in NetLink”; live NetLink does not use the Adapter.",
       "savas_overlap_and_integration": [
-        "Не считать устранением всех runtime-handle bugs Provod. Сохранить как design/test prototype; возможный будущий unified IDs слой требует интеграции, snapshot+rekey rules, world/stream epochs и доказательства, а не include-only переноса."
+        "Do not treat this as a completed fix for all Provod runtime-handle bugs. Preserve as a design/test prototype. A unified ID layer still needs integration, snapshot/rekey rules, world/stream epochs and evidence beyond adding headers."
       ]
     }
   ],

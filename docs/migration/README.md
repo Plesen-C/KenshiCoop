@@ -1,14 +1,14 @@
-# Миграция изменений KenshiCoop
+# KenshiCoop migration research
 
-[Основной план](../../MIGRATION_PLAN.md) · [Сводная карта](change-map.md) · [Машиночитаемая карта](change-map.json)
+[Integration plan](../../MIGRATION_PLAN.md) · [Consolidated change map](change-map.md) · [Machine-readable map](change-map.json)
 
-Исследование от 1 ноября 2026 года охватывает активные продолжения из [поиска форков](forks-2026-11-01.md), включая историю выбранных веток. 101 донорская группа сведена по 25 областям; дубли и альтернативные реализации отмечены отдельно.
+The November 1, 2026 review covers active continuations from the [fork search](forks-2026-11-01.md), including selected branches’ earlier history. Its 101 donor groups are organized into 25 areas, with duplicates and alternative implementations identified.
 
-| Материал | Содержание |
+| Material | Scope |
 |---|---|
-| [core-changes.md](core-changes.md), [JSON](changes-core.json) | nhoral, Savas07, ximery4, Wo-o-o, captainjoshua77, cookingwithsimon и DerpyNewb |
-| [brandon-tokela-changes.md](brandon-tokela-changes.md), [JSON](changes-tokela.json) | Brandon, TokelaCoop, atimal/KenshiDuo; [ветки и SHA](branch-manifest.json) |
-| [detached-changes.md](detached-changes.md), [JSON](changes-detached.json) | kotetsyy, Vep124, архив исходников Provod; LRaverdy как архитектурное сравнение |
-| [integration-evidence.json](integration-evidence.json) | 82 refs, сравнение patch-id среди 420 non-merge коммитов, общая история и конфликты пробных слияний |
+| [core-changes.md](core-changes.md), [JSON](changes-core.json) | nhoral, Savas07, ximery4, Wo-o-o, captainjoshua77, cookingwithsimon and DerpyNewb |
+| [brandon-tokela-changes.md](brandon-tokela-changes.md), [JSON](changes-tokela.json) | Brandon, TokelaCoop and atimal/KenshiDuo; [branches/SHAs](branch-manifest.json) |
+| [detached-changes.md](detached-changes.md), [JSON](changes-detached.json) | kotetsyy, Vep124 and Provod source archive; LRaverdy as architectural reference |
+| [integration-evidence.json](integration-evidence.json) | 82 refs, patch-id checks across 420 non-merge commits, shared ancestry and trial-merge conflicts |
 
-Карты описывают результаты статического анализа. Здесь нет готовой объединённой DLL; сборки и игровые проверки предусмотрены планом. Ссылки на изменяемые ветки служат навигацией; точное основание выводов — сохранённые SHA и хеши архивов. Локальные git-копии, zip, дампы и промежуточные diff не публикуются вместе с документацией.
+These maps report static analysis. A combined DLL has not been built; builds and gameplay checks are scheduled in the plan. Mutable branch links provide navigation; saved SHAs/archive hashes identify the reviewed snapshots. Local repositories, archives, dumps and intermediate diffs are not published here.

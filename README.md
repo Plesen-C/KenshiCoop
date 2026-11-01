@@ -1,6 +1,6 @@
 # KenshiCoop
 
-> **План миграции этого форка:** [MIGRATION_PLAN.md](MIGRATION_PLAN.md) — порядок объединения активных продолжений, конфликты протоколов и критерии проверки. [Карта изменений](docs/migration/change-map.md) учитывает 101 донорскую группу. Сейчас опубликована документация миграции; код продолжений ещё не интегрирован.
+> **Migration plan for this fork:** [MIGRATION_PLAN.md](MIGRATION_PLAN.md) describes the integration sequence, protocol conflicts and validation gates. The [change map](docs/migration/change-map.md) tracks 101 donor groups. This fork currently publishes migration documentation; continuation code has not yet been integrated.
 
 Setup + Demo: [https://www.youtube.com/watch?v=OqwVRRZEYGM](https://www.youtube.com/watch?v=OqwVRRZEYGM)
 

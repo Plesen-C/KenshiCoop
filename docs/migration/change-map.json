@@ -4,31 +4,31 @@
   "coverage": "101 donor groups are not 101 independent unique features; many overlap",
   "base": "58514ea33538fca78e932abf44bb658d4e915236",
   "families": {
-    "F01": "Сборка, зависимости и ABI",
-    "F02": "Сессия, wire и маршрутизация",
-    "F03": "Identity сущностей",
-    "F04": "Владение игроками и roster",
-    "F05": "Сохранения и checkpoint",
-    "F06": "Полные inventory snapshots",
+    "F01": "Build, dependencies and ABI",
+    "F02": "Session, wire protocol and routing",
+    "F03": "Entity identity",
+    "F04": "Player ownership and roster",
+    "F05": "Saves and checkpoints",
+    "F06": "Complete inventory snapshots",
     "F07": "Conserved item transactions",
     "F08": "Merchant trade",
-    "F09": "Свойства предметов",
-    "F10": "World items и claims",
-    "F11": "Production и research",
-    "F12": "Стройка, двери и замки",
-    "F13": "Мебель и procedural objects",
-    "F14": "Бой и медицина",
-    "F15": "Движение и authority",
-    "F16": "Squad metadata и jobs",
-    "F17": "Lifecycle и teardown",
-    "F18": "Discovery и admission",
-    "F19": "Общий UI и Unicode",
+    "F09": "Item properties",
+    "F10": "World items and claims",
+    "F11": "Production and research",
+    "F12": "Construction, doors and locks",
+    "F13": "Furniture and procedural objects",
+    "F14": "Combat and medical state",
+    "F15": "Movement and authority",
+    "F16": "Squad metadata and jobs",
+    "F17": "Lifecycle and teardown",
+    "F18": "Discovery and admission",
+    "F19": "Shared UI and Unicode",
     "F20": "Transport backends",
-    "F21": "Правила экономики и скорости",
-    "F22": "Диагностика и тесты",
-    "F23": "Установка и обновления",
-    "F24": "Документация и provenance",
-    "F25": "Эксперименты с отдельным gate"
+    "F21": "Economy and speed policies",
+    "F22": "Diagnostics and tests",
+    "F23": "Installation and updates",
+    "F24": "Documentation and provenance",
+    "F25": "Experiments with explicit gates"
   },
   "groups": [
     {
@@ -510,7 +510,7 @@
         "F10"
       ],
       "disposition": "manual_port_unique_hunks",
-      "integration_note": "Только уникальные tombstone/owner-filter хунки; Savas NativeTaken и dormant drops сохранить.",
+      "integration_note": "Port unique tombstone/ownership-filter hunks while retaining Savas NativeTaken and dormant drops.",
       "donor_decision": "Keep Savas pending/dormant drops and NativeTaken; add tombstones, nofac-aware ownership filter and peer-owner check before unresolved-drop bookkeeping. No whole-commit exact patch-id duplicate in Savas.",
       "runtime_status": null,
       "commits": [
@@ -570,7 +570,7 @@
         "F08"
       ],
       "disposition": "manual-port-with-lifecycle-fix",
-      "integration_note": "Перенос + обязательные epoch/reset/peer cleanup; текущая чистота merge не доказывает корректность.",
+      "integration_note": "Port with mandatory epoch/reset/peer cleanup; a conflict-free merge does not establish correctness.",
       "donor_decision": "Add resetSession/peer-leave clearing for 4 new containers, protocol unification, match ambiguity tests. Old trader-identity has orphan snapshot history and should not be merged wholesale.",
       "runtime_status": null,
       "commits": [
@@ -590,7 +590,7 @@
         "F25"
       ],
       "disposition": "reimplemented-for-invariant; experimental-gate-until-proven",
-      "integration_note": "Переработать source-provenance; raw fabrication default-off; обе ветки учитывать один раз.",
+      "integration_note": "Require source provenance before fabrication; keep raw bypass default-off and count both branches once.",
       "donor_decision": "5f89ce8 tree equals d253e78+6e62ceb full tree. Do not take both. Default-on bypass can also fabricate an empty shared world chest; require source provenance and chest/corpse race tests; default off until proved.",
       "runtime_status": null,
       "commits": [
@@ -611,7 +611,7 @@
         "F22"
       ],
       "disposition": "optional-diagnostics",
-      "integration_note": "Отдельно сохранить диагностику старого snapshot без переноса его истории.",
+      "integration_note": "Preserve diagnostics from the old snapshot separately without merging its history.",
       "donor_decision": "Not present in two clean upstream patch branches; preserve if goal covers every unique instrumentation change.",
       "runtime_status": null,
       "commits": [
@@ -666,7 +666,7 @@
         "F24"
       ],
       "disposition": "docs/provenance-only",
-      "integration_note": "Документация и provenance, runtime-порт отсутствует.",
+      "integration_note": "Documentation/provenance only; no runtime port.",
       "donor_decision": "",
       "runtime_status": null,
       "commits": [
@@ -677,7 +677,7 @@
     {
       "id": "tokela/B01",
       "source_map": "changes-tokela.json",
-      "title": "Shared base UI: `cf82345` native co-op UI DLL, `64303d5` Unicode bootstrap, `1010a9a` ввод ника. `src/ui/CoopUi.cpp`,`CoopUiApi.h`,`NativeEdit.h`, core/UiModule",
+      "title": "Shared UI ancestry: `cf82345` native co-op UI DLL, `64303d5` Unicode bootstrap, `1010a9a` nickname entry. `src/ui/CoopUi.cpp`, `CoopUiApi.h`, `NativeEdit.h`, core/UiModule.",
       "phases": [
         "P9",
         "P10"
@@ -686,8 +686,8 @@
         "F19"
       ],
       "disposition": "shared-lineage; one-ui-adapter",
-      "integration_note": "Общая линия с K02; один UI controller, native backend позднее.",
-      "donor_decision": "BASE/CHOICE. Уже есть kotetsyy. Конкурирует с Tokela F2 и Savas main-menu lobby. Выбрать один UI, сохранить сценарии других как требования; двойные hooks меню/focus не ставить.",
+      "integration_note": "Shared ancestry with K02; one UI controller, native backend later.",
+      "donor_decision": "BASE/CHOICE. Already shared with kotetsyy. Competes with the Tokela F2 panel and Savas main-menu lobby. Use one UI implementation and preserve the other interaction scenarios as requirements; avoid duplicate menu/focus hooks.",
       "runtime_status": null,
       "commits": [
         {
@@ -707,7 +707,7 @@
     {
       "id": "tokela/B02",
       "source_map": "changes-tokela.json",
-      "title": "Shared base save/network: `7f4b452` load-specific READY и 1ms wait, `bc8f059` QPC 100Hz, `7e29a46` сохранение user pause. Plugin/NetLink/ReplicatorPublish/Interp",
+      "title": "Shared save/network ancestry: `7f4b452` load-specific READY barrier and 1 ms wait, `bc8f059` QPC-based 100 Hz pacing, `7e29a46` preservation of user pause. Plugin/NetLink/ReplicatorPublish/Interp.",
       "phases": [
         "P5",
         "P7"
@@ -717,8 +717,8 @@
         "F15"
       ],
       "disposition": "manual-port/adapt",
-      "integration_note": "BASE/PORT. Не считать новым Brandon патчем. 100Hz — параметр для WAN benchmark, а не автоматический default при объединении.",
-      "donor_decision": "BASE/PORT. Не считать новым Brandon патчем. 100Hz — параметр для WAN benchmark, а не автоматический default при объединении.",
+      "integration_note": "BASE/PORT. These are not independent Brandon additions. Treat 100 Hz as a WAN benchmark parameter, not an automatic integration default.",
+      "donor_decision": "BASE/PORT. These are not independent Brandon additions. Treat 100 Hz as a WAN benchmark parameter, not an automatic integration default.",
       "runtime_status": null,
       "commits": [
         {
@@ -738,7 +738,7 @@
     {
       "id": "tokela/B03",
       "source_map": "changes-tokela.json",
-      "title": "Shared base conservation/merchant: `ee7ff56`,`f72e72b`,`7c89ed9`; `EngineInventory::{applyStockLayout, reconcileInventory, applyToInventory, moveItemBetweenContainers}`, EngineInternal cursor hooks; ReplicatorItems",
+      "title": "Shared conservation/merchant ancestry: `ee7ff56`, `f72e72b`, `7c89ed9`; `EngineInventory::{applyStockLayout, reconcileInventory, applyToInventory, moveItemBetweenContainers}`, EngineInternal cursor hooks, ReplicatorItems.",
       "phases": [
         "P4",
         "P5"
@@ -748,8 +748,8 @@
         "F08"
       ],
       "disposition": "shared-lineage; one-conservation-pipeline",
-      "integration_note": "Общая линия с K07/K08; один transaction pipeline, не два native hook writer.",
-      "donor_decision": "BASE/CHOICE. Один inventory механизм. Stock template/layout + held cursor reservations и snapshot suppression неделимы с вызывающими hooks. 7c89ed9 исключает snapshot relocation из cursor capture. Конкурирует с Savas vendor delta/trader lock и atimal StoreAdd.",
+      "integration_note": "Shared ancestry with K07/K08; one transaction pipeline, not two native-hook writers.",
+      "donor_decision": "BASE/CHOICE. Use one inventory mechanism. Stock templates/layouts, held-cursor reservations and snapshot suppression must stay consistent with their hooks. `7c89ed9` excludes snapshot relocation from cursor capture. Competes with Savas vendor deltas/trader locks and atimal StoreAdd.",
       "runtime_status": null,
       "commits": [
         {
@@ -769,7 +769,7 @@
     {
       "id": "tokela/B04",
       "source_map": "changes-tokela.json",
-      "title": "Shared base identity/containers: `0d889e5` census-adopted chest не может утверждать пустоту, пока не видела наполнения; `ff87378` nearby mint settle, `f72e72b` authority fixes",
+      "title": "Shared identity/container ancestry: `0d889e5` prevents a census-adopted chest from asserting emptiness before it has observed contents; `ff87378` adds nearby-mint settling; `f72e72b` fixes authority.",
       "phases": [
         "P3",
         "P4"
@@ -779,8 +779,8 @@
         "F06"
       ],
       "disposition": "manual-port/adapt",
-      "integration_note": "BASE/PORT. Сохранить инварианты при любом выбранном inventory/spawn движке; не вернуть более старую copy/mint логику другого форка.",
-      "donor_decision": "BASE/PORT. Сохранить инварианты при любом выбранном inventory/spawn движке; не вернуть более старую copy/mint логику другого форка.",
+      "integration_note": "BASE/PORT. Preserve these invariants whichever inventory/spawn implementation is selected. Do not reintroduce an older copy/mint path from another fork.",
+      "donor_decision": "BASE/PORT. Preserve these invariants whichever inventory/spawn implementation is selected. Do not reintroduce an older copy/mint path from another fork.",
       "runtime_status": null,
       "commits": [
         {
@@ -800,7 +800,7 @@
     {
       "id": "tokela/B05",
       "source_map": "changes-tokela.json",
-      "title": "Squad names `b43504c`, faction rename `b01e65e`, permanent jobs `97c1649`; `ReplicatorChannels::{publish/applySquadNames, publish/applyFactionName, publish/applyJobs}`, Wire tags50–53; tests squad_meta_persist",
+      "title": "Squad names `b43504c`, faction rename `b01e65e`, permanent jobs `97c1649`; `ReplicatorChannels::{publish/applySquadNames, publish/applyFactionName, publish/applyJobs}`, wire tags 50–53; squad_meta_persist tests.",
       "phases": [
         "P8"
       ],
@@ -808,8 +808,8 @@
         "F16"
       ],
       "disposition": "semantic-merge-with-existing-metadata",
-      "integration_note": "Семантическое перекрытие SAV-JOINSTATE: одна metadata schema + объединённые acceptance tests.",
-      "donor_decision": "CHOICE/PORT. Семантический дубль Savas7697515 `PKT_JOIN_STATE`, но Brandon имеет отдельные типы и faction ackSeq[MAX_PLAYERS]. Оставить одну модель metadata, добавить тесты из обеих реализаций. Нужны согласованные tab ownership, wire→local предметы/постройки и save barrier.",
+      "integration_note": "Semantically overlaps SAV-JOINSTATE; use one metadata schema with combined acceptance tests.",
+      "donor_decision": "CHOICE/PORT. Semantically overlaps Savas `7697515` / `PKT_JOIN_STATE`, but Brandon uses separate types and faction ackSeq[MAX_PLAYERS]. Keep one metadata model and combine tests. Requires consistent tab ownership, wire-to-local item/building translation and a save barrier.",
       "runtime_status": null,
       "commits": [
         {
@@ -833,7 +833,7 @@
     {
       "id": "tokela/B06",
       "source_map": "changes-tokela.json",
-      "title": "`de7bf0d`: собственные attackers для hit reports; EngineInternal hitByMelee_hook, ReplicatorDrive::applyTargets (sets report attacker), Config flag HIT_REPORT_OWNER",
+      "title": "`de7bf0d`: report hits only for owned attackers; EngineInternal::hitByMelee_hook, ReplicatorDrive::applyTargets (sets report attacker), HIT_REPORT_OWNER config flag.",
       "phases": [
         "P7"
       ],
@@ -841,8 +841,8 @@
         "F14"
       ],
       "disposition": "semantic-merge-with-T07",
-      "integration_note": "Семантический дубль T07 по OWN filter, дополнить host-veto/limb rules.",
-      "donor_decision": "PORT/semantic duplicate Tokela72a4b81. Объединить с host veto remote swings Tokela; не запускать два независимых damage-пути. Тест hit_report_owner + melee_together и friendly fire.",
+      "integration_note": "Shares the OWN filter with T07; add its host-veto/limb invariants.",
+      "donor_decision": "PORT; semantic overlap with Tokela `72a4b81`. Combine with the Tokela host veto for remote swings; do not run two damage paths. Test hit_report_owner, melee_together and friendly fire.",
       "runtime_status": null,
       "commits": [
         {
@@ -854,7 +854,7 @@
     {
       "id": "tokela/B07",
       "source_map": "changes-tokela.json",
-      "title": "`583c3cd`: camera-jump/loading pause не принимается за пользовательский pause; EngineCharState readEngineLoadingPause/EngineInternal/Plugin; camera_jump_pause",
+      "title": "`583c3cd`: distinguish camera-jump/loading pause from user pause; EngineCharState::readEngineLoadingPause, EngineInternal, Plugin; camera_jump_pause.",
       "phases": [
         "P7",
         "P8"
@@ -864,8 +864,8 @@
         "F21"
       ],
       "disposition": "manual-port/adapt",
-      "integration_note": "PORT. Сохраняет pause votes и load pause отдельно. Взаимодействует с Savas speed votes, atimal host-loss pause, shared base7e29a46. Нужен единый state machine с причинами паузы.",
-      "donor_decision": "PORT. Сохраняет pause votes и load pause отдельно. Взаимодействует с Savas speed votes, atimal host-loss pause, shared base7e29a46. Нужен единый state machine с причинами паузы.",
+      "integration_note": "PORT. Keep pause votes separate from loading pause. Interacts with Savas speed votes, atimal host-loss pause and shared ancestor `7e29a46`. Use one state machine with explicit pause reasons.",
+      "donor_decision": "PORT. Keep pause votes separate from loading pause. Interacts with Savas speed votes, atimal host-loss pause and shared ancestor `7e29a46`. Use one state machine with explicit pause reasons.",
       "runtime_status": null,
       "commits": [
         {
@@ -877,7 +877,7 @@
     {
       "id": "tokela/B08",
       "source_map": "changes-tokela.json",
-      "title": "Hostile NPC stuck mirror: `f782395` reach probe,`d88ad83` episodes,`160f643` mirror,`d55c6ee` displacement+age cap,`53651c9` mirrored bodies не источник truth; applyTargets/ReplicatorUtil",
+      "title": "Stuck hostile-NPC mirror: `f782395` reach probe, `d88ad83` episode telemetry, `160f643` mirror, `d55c6ee` displacement/age cap, `53651c9` prevents mirrored bodies from becoming truth sources; applyTargets/ReplicatorUtil.",
       "phases": [
         "P7"
       ],
@@ -886,8 +886,8 @@
         "F15"
       ],
       "disposition": "manual-port/adapt",
-      "integration_note": "PORT после authority/identity. Для !isSquad NPC: replay combat только если owner в reach60u или прошел 15u за 1.5s; ranged исключение; hold максимум max(500ms, owner combat episode age), cap4s. Savas ef40acd защищает engaged **squad** copy, дополняет по смыслу, конфликтует по applyTargets. Переносить финальный state целиком с tests, не только ранний 160f643.",
-      "donor_decision": "PORT после authority/identity. Для !isSquad NPC: replay combat только если owner в reach60u или прошел 15u за 1.5s; ranged исключение; hold максимум max(500ms, owner combat episode age), cap4s. Savas ef40acd защищает engaged **squad** copy, дополняет по смыслу, конфликтует по applyTargets. Переносить финальный state целиком с tests, не только ранний 160f643.",
+      "integration_note": "PORT after authority/identity. For non-squad NPCs, replay combat only when the owner is within 60 units of reach or has moved 15 units in 1.5 s; ranged attacks are an exception. Hold is bounded by max(500 ms, owner combat-episode age), capped at 4 s. Savas `ef40acd` protects engaged squad copies: complementary semantics, conflicting applyTargets edits. Port the final behavior with tests, not just early `160f643`.",
+      "donor_decision": "PORT after authority/identity. For non-squad NPCs, replay combat only when the owner is within 60 units of reach or has moved 15 units in 1.5 s; ranged attacks are an exception. Hold is bounded by max(500 ms, owner combat-episode age), capped at 4 s. Savas `ef40acd` protects engaged squad copies: complementary semantics, conflicting applyTargets edits. Port the final behavior with tests, not just early `160f643`.",
       "runtime_status": null,
       "commits": [
         {
@@ -919,7 +919,7 @@
     {
       "id": "tokela/B09",
       "source_map": "changes-tokela.json",
-      "title": "Combat diagnostics/oracles `aa9fbd8`,`5df6b03`,`f782395`,`d88ad83`; scripts/oracles/Combat.ps1, ScenarioCombat/Npc/Probes",
+      "title": "Combat diagnostics/oracles `aa9fbd8`, `5df6b03`, `f782395`, `d88ad83`; scripts/oracles/Combat.ps1, ScenarioCombat/Npc/Probes.",
       "phases": [
         "P7",
         "P11"
@@ -928,8 +928,8 @@
         "F22"
       ],
       "disposition": "manual-port/adapt",
-      "integration_note": "REUSE. one_sided_fight, mint_aggro, combat_crowd, battle, travel. Автор сообщил финальные A/B mirror on3PASS/off3FAIL; crowd2/3PASS, один coverage failure. Сохранить это ограничение, не объявлять полную стабильность.",
-      "donor_decision": "REUSE. one_sided_fight, mint_aggro, combat_crowd, battle, travel. Автор сообщил финальные A/B mirror on3PASS/off3FAIL; crowd2/3PASS, один coverage failure. Сохранить это ограничение, не объявлять полную стабильность.",
+      "integration_note": "REUSE. Covers one_sided_fight, mint_aggro, combat_crowd, battle and travel. The author reported final A/B results of mirror-on 3 PASS / mirror-off 3 FAIL; crowd passed 2/3 runs with one coverage failure. Preserve this limitation; it does not establish overall stability.",
+      "donor_decision": "REUSE. Covers one_sided_fight, mint_aggro, combat_crowd, battle and travel. The author reported final A/B results of mirror-on 3 PASS / mirror-off 3 FAIL; crowd passed 2/3 runs with one coverage failure. Preserve this limitation; it does not establish overall stability.",
       "runtime_status": null,
       "commits": [
         {
@@ -953,7 +953,7 @@
     {
       "id": "tokela/B10",
       "source_map": "changes-tokela.json",
-      "title": "Friend installer `2f0ea97`,`16334fb`,`b933ff5`,`659e930`; installer/Setup.ps1, Launcher.cs, build_setup, test_setup",
+      "title": "Friend installer `2f0ea97`, `16334fb`, `b933ff5`, `659e930`; installer/Setup.ps1, Launcher.cs, build_setup, test_setup.",
       "phases": [
         "P11"
       ],
@@ -961,8 +961,8 @@
         "F23"
       ],
       "disposition": "manual-port/adapt",
-      "integration_note": "OPTIONAL. Требует собственной release identity и canonical asset manifest. Автоподбор RE_Kenshi1.0.65 game copy на Steam1.0.68 — проверить на целевой версии; не раздавать чужой UPDATE URL. Бинарные release artifacts не брать как source.",
-      "donor_decision": "OPTIONAL. Требует собственной release identity и canonical asset manifest. Автоподбор RE_Kenshi1.0.65 game copy на Steam1.0.68 — проверить на целевой версии; не раздавать чужой UPDATE URL. Бинарные release artifacts не брать как source.",
+      "integration_note": "OPTIONAL. Needs its own release identity and canonical asset manifest. Validate automatic selection of the RE_Kenshi 1.0.65 game copy on Steam 1.0.68 against the chosen target. Replace donor UPDATE URLs. Rebuild artifacts from source.",
+      "donor_decision": "OPTIONAL. Needs its own release identity and canonical asset manifest. Validate automatic selection of the RE_Kenshi 1.0.65 game copy on Steam 1.0.68 against the chosen target. Replace donor UPDATE URLs. Rebuild artifacts from source.",
       "runtime_status": null,
       "commits": [
         {
@@ -986,7 +986,7 @@
     {
       "id": "tokela/B11",
       "source_map": "changes-tokela.json",
-      "title": "Build repair `eaf14f8` — MSBuild discovery, KenshiLib0.4.0 CombatClass include",
+      "title": "Build repair `eaf14f8`: MSBuild discovery and KenshiLib 0.4.0 CombatClass include.",
       "phases": [
         "P0"
       ],
@@ -994,8 +994,8 @@
         "F01"
       ],
       "disposition": "manual-port/adapt",
-      "integration_note": "REUSE/CHOICE. Tokela pin0.3.0 и совместимые header patches отличаются. Перед runtime-портами выбрать одну ABI/toolchain версию.",
-      "donor_decision": "REUSE/CHOICE. Tokela pin0.3.0 и совместимые header patches отличаются. Перед runtime-портами выбрать одну ABI/toolchain версию.",
+      "integration_note": "REUSE/CHOICE. Tokela pins 0.3.0 and uses different compatible-header patches. Select one ABI/toolchain version before runtime ports.",
+      "donor_decision": "REUSE/CHOICE. Tokela pins 0.3.0 and uses different compatible-header patches. Select one ABI/toolchain version before runtime ports.",
       "runtime_status": null,
       "commits": [
         {
@@ -1007,7 +1007,7 @@
     {
       "id": "tokela/T01",
       "source_map": "changes-tokela.json",
-      "title": "Reproducible Windows v100 CI `43d310b`…`5b54a9a`, KenshiLib pinned `d40413f`(e75769b/0.3.0), fetch_deps, setup_toolchain7444aed; e34995c locale-neutral tests",
+      "title": "Reproducible Windows v100 CI `43d310b`…`5b54a9a`, pinned KenshiLib `d40413f` (e75769b/0.3.0), fetch_deps, setup_toolchain `7444aed`; `e34995c` locale-neutral tests.",
       "phases": [
         "P0",
         "P11"
@@ -1017,8 +1017,8 @@
         "F22"
       ],
       "disposition": "manual-port/adapt",
-      "integration_note": "REUSE/CHOICE toolchain. Локальные helper/CI сначала; не перетирать выбранный ABI0.4.0. Тестовые шаблоны stringID лучше localized name fallback.",
-      "donor_decision": "REUSE/CHOICE toolchain. Локальные helper/CI сначала; не перетирать выбранный ABI0.4.0. Тестовые шаблоны stringID лучше localized name fallback.",
+      "integration_note": "REUSE/CHOICE of toolchain. Bring in local helpers/CI first, preserving the selected ABI rather than overwriting 0.4.0 dependencies. Prefer test-template stringIDs over localized-name fallbacks.",
+      "donor_decision": "REUSE/CHOICE of toolchain. Bring in local helpers/CI first, preserving the selected ABI rather than overwriting 0.4.0 dependencies. Prefer test-template stringIDs over localized-name fallbacks.",
       "runtime_status": null,
       "commits": [
         {
@@ -1046,7 +1046,7 @@
     {
       "id": "tokela/T02",
       "source_map": "changes-tokela.json",
-      "title": "Mod parity `61baa9a`,`9867fa0`,`3baf97b`; core/ModList.h, Wire ModListPacket, NetLink",
+      "title": "Mod parity `61baa9a`, `9867fa0`, `3baf97b`; core/ModList.h, wire ModListPacket, NetLink.",
       "phases": [
         "P1",
         "P9"
@@ -1055,8 +1055,8 @@
         "F18"
       ],
       "disposition": "manual-port/adapt",
-      "integration_note": "PORT. Сравнивает имена модов вместо install directories; требует выделенного packet tag и normalized list/order policy. В atimal tag56, в исходном Tokela49. Строгий отказ после handshake должен одинаково работать на всех join IDs.",
-      "donor_decision": "PORT. Сравнивает имена модов вместо install directories; требует выделенного packet tag и normalized list/order policy. В atimal tag56, в исходном Tokela49. Строгий отказ после handshake должен одинаково работать на всех join IDs.",
+      "integration_note": "PORT. Compares mod filenames instead of installation directories. Needs a dedicated packet tag and normalized list/order policy. Atimal uses tag 56; original Tokela uses 49. Strict post-handshake refusal must work for every joining-player ID.",
+      "donor_decision": "PORT. Compares mod filenames instead of installation directories. Needs a dedicated packet tag and normalized list/order policy. Atimal uses tag 56; original Tokela uses 49. Strict post-handshake refusal must work for every joining-player ID.",
       "runtime_status": null,
       "commits": [
         {
@@ -1076,7 +1076,7 @@
     {
       "id": "tokela/T03",
       "source_map": "changes-tokela.json",
-      "title": "Robust refusal/admission `c171e40`,`96cafe0`,`c10e942`, tool e1570e0 kcprobe/tunneltest; core/Refusal.h, NetLink, EngineUi",
+      "title": "Robust refusal/admission `c171e40`, `96cafe0`, `c10e942`; `e1570e0` kcprobe/tunneltest tooling; core/Refusal.h, NetLink, EngineUi.",
       "phases": [
         "P2",
         "P9"
@@ -1086,8 +1086,8 @@
         "F17"
       ],
       "disposition": "manual-port/adapt",
-      "integration_note": "PORT. Typed reasons/timeouts/clean leave useful; **two-player admission нельзя переносить на 4/8-player как есть**. При multi-peer учесть each pending/disconnected peer и изоляцию reason.",
-      "donor_decision": "PORT. Typed reasons/timeouts/clean leave useful; **two-player admission нельзя переносить на 4/8-player как есть**. При multi-peer учесть each pending/disconnected peer и изоляцию reason.",
+      "integration_note": "PORT. Typed reasons, timeouts and clean departures are useful. Two-player admission cannot be copied unchanged into a 4/8-player session: track each pending/disconnected peer and isolate its refusal reason.",
+      "donor_decision": "PORT. Typed reasons, timeouts and clean departures are useful. Two-player admission cannot be copied unchanged into a 4/8-player session: track each pending/disconnected peer and isolate its refusal reason.",
       "runtime_status": null,
       "commits": [
         {
@@ -1111,7 +1111,7 @@
     {
       "id": "tokela/T04",
       "source_map": "changes-tokela.json",
-      "title": "UI `1161f41`,`4132cab`, f70fabe Unicode,80f01b9 focus-only, b543b4f shutdown teardown, c9b2291 gray-off banner",
+      "title": "UI `1161f41`, `4132cab`; `f70fabe` Unicode, `80f01b9` focus-only handling, `b543b4f` shutdown teardown, `c9b2291` gray offline banner.",
       "phases": [
         "P2",
         "P9"
@@ -1121,8 +1121,8 @@
         "F19"
       ],
       "disposition": "manual-port/adapt",
-      "integration_note": "CHOICE. Совместить требования с B01/Savas menu. При отказе от Tokela UI перенести lifecycle/focus fixes по смыслу, а не удалять существующие hooks другого UI.",
-      "donor_decision": "CHOICE. Совместить требования с B01/Savas menu. При отказе от Tokela UI перенести lifecycle/focus fixes по смыслу, а не удалять существующие hooks другого UI.",
+      "integration_note": "CHOICE. Combine requirements with B01 and the Savas menu. If Tokela UI is not selected, adapt lifecycle/focus fixes to the chosen UI rather than removing its existing hooks.",
+      "donor_decision": "CHOICE. Combine requirements with B01 and the Savas menu. If Tokela UI is not selected, adapt lifecycle/focus fixes to the chosen UI rather than removing its existing hooks.",
       "runtime_status": null,
       "commits": [
         {
@@ -1154,7 +1154,7 @@
     {
       "id": "tokela/T05",
       "source_map": "changes-tokela.json",
-      "title": "Burst transfers48bd370:core/XferPair.h и ReplicatorItems detectAndPublishTransfers, xferHoldsSnapshot, xferRebaseKey, xferBaseShift, applyTransfers/applyXferAcks",
+      "title": "Burst transfers `48bd370`: core/XferPair.h and ReplicatorItems::{detectAndPublishTransfers, xferHoldsSnapshot, xferRebaseKey, xferBaseShift, applyTransfers, applyXferAcks}.",
       "phases": [
         "P4"
       ],
@@ -1162,8 +1162,8 @@
         "F07"
       ],
       "disposition": "manual-port/adapt",
-      "integration_note": "PORT/CHOICE с B03/Savas loot-race. Каждый settled key pairing, split gains, no whole-container rebase, snapshot hold до intent, explicit refused take/give rollback. Сохранить ledger-инварианты, переиспользовать чистый XferPair + trade_burst тесты; не вклеивать старую mint логику поверх нового conservation.",
-      "donor_decision": "PORT/CHOICE с B03/Savas loot-race. Каждый settled key pairing, split gains, no whole-container rebase, snapshot hold до intent, explicit refused take/give rollback. Сохранить ledger-инварианты, переиспользовать чистый XferPair + trade_burst тесты; не вклеивать старую mint логику поверх нового conservation.",
+      "integration_note": "PORT/CHOICE with B03 and Savas loot-race handling. Pair each settled key, split gains, avoid whole-container rebasing, hold snapshots before intent, and explicitly roll back refused take/give operations. Preserve ledger invariants and reuse pure XferPair/trade_burst tests; do not layer old mint logic over the new conservation model.",
+      "donor_decision": "PORT/CHOICE with B03 and Savas loot-race handling. Pair each settled key, split gains, avoid whole-container rebasing, hold snapshots before intent, and explicitly roll back refused take/give operations. Preserve ledger invariants and reuse pure XferPair/trade_burst tests; do not layer old mint logic over the new conservation model.",
       "runtime_status": null,
       "commits": [
         {
@@ -1175,7 +1175,7 @@
     {
       "id": "tokela/T06",
       "source_map": "changes-tokela.json",
-      "title": "Ownershipa7feeb9, per-save owners ledgerac2dc5a, audit0838277,21718b9,08f8f7a, own-guardbae3e58:EngineEntity/Ui, ReplicatorPublish/Spawn/Channels, SaveXfer",
+      "title": "Ownership `a7feeb9`, per-save owners ledger `ac2dc5a`, audits `0838277`, `21718b9`, `08f8f7a`, own-guard `bae3e58`: EngineEntity/Ui, ReplicatorPublish/Spawn/Channels, SaveXfer.",
       "phases": [
         "P3",
         "P8"
@@ -1185,8 +1185,8 @@
         "F04"
       ],
       "disposition": "manual-port/adapt",
-      "integration_note": "PORT/CHOICE с Savas be1a051/3a567b9/58514ea. Стабильный tab identity, own-selection scrub, friend-body resolver, recruit protection across disconnect/transfer, stealth/furniture reentry. Atimal уже включает. Нужна одна sidecar schema/migration вместо двух параллельных ledger.",
-      "donor_decision": "PORT/CHOICE с Savas be1a051/3a567b9/58514ea. Стабильный tab identity, own-selection scrub, friend-body resolver, recruit protection across disconnect/transfer, stealth/furniture reentry. Atimal уже включает. Нужна одна sidecar schema/migration вместо двух параллельных ledger.",
+      "integration_note": "PORT/CHOICE with Savas `be1a051`/`3a567b9`/`58514ea`. Preserve stable tab identity, selection cleanup, friend-body resolution, recruits across disconnect/transfer, and stealth/furniture re-entry. Already inherited by atimal. Use one sidecar schema/migration instead of parallel ledgers.",
+      "donor_decision": "PORT/CHOICE with Savas `be1a051`/`3a567b9`/`58514ea`. Preserve stable tab identity, selection cleanup, friend-body resolution, recruits across disconnect/transfer, and stealth/furniture re-entry. Already inherited by atimal. Use one sidecar schema/migration instead of parallel ledgers.",
       "runtime_status": null,
       "commits": [
         {
@@ -1226,7 +1226,7 @@
     {
       "id": "tokela/T07",
       "source_map": "changes-tokela.json",
-      "title": "Double damage/limb authority72a4b81:EngineInternal::{hitByMelee_hook, clearRemoteSwingers, addRemoteSwinger, addSquadBody}, ReplicatorDrive, ReplicatorChannels",
+      "title": "Double-damage/limb authority `72a4b81`: EngineInternal::{hitByMelee_hook, clearRemoteSwingers, addRemoteSwinger, addSquadBody}, ReplicatorDrive, ReplicatorChannels.",
       "phases": [
         "P7"
       ],
@@ -1234,8 +1234,8 @@
         "F14"
       ],
       "disposition": "semantic-merge-with-B06-plus-unique-invariants",
-      "integration_note": "Объединить с B06; уникальные host-veto и limb authority сохранить.",
-      "donor_decision": "PORT/semantic duplicate B06. Join reports only own attacks;host remote copy swing cosmetic except own-squad targets;severed-item creator chosen by role, не streamNpcs_. Это сильнее одного own-report filter.",
+      "integration_note": "Combine with B06 while preserving unique host-veto and limb-authority rules.",
+      "donor_decision": "PORT; semantic overlap with B06. Join reports only owned attacks. Host-side swings by remote copies are cosmetic except against owned-squad targets. Select the severed-item creator by role, not streamNpcs_. This adds invariants beyond the own-report filter.",
       "runtime_status": null,
       "commits": [
         {
@@ -1247,7 +1247,7 @@
     {
       "id": "tokela/T08",
       "source_map": "changes-tokela.json",
-      "title": "Save backlogb84c478:NetLink::peerBacklogBytes/sendBacklog, SaveXfer sender, Plugin driveSaveSync",
+      "title": "Save backlog `b84c478`: NetLink::peerBacklogBytes/sendBacklog, SaveXfer sender, Plugin::driveSaveSync.",
       "phases": [
         "P2",
         "P5"
@@ -1257,8 +1257,8 @@
         "F20"
       ],
       "disposition": "manual-port/adapt",
-      "integration_note": "PORT. Autosave не stream, chunk admission while backlog<256KB;real reliable backlog across channels. Atimal WAN512KB window и compression дополняют, но window не отменяет backpressure. UI transfer progress по выбранному UI.",
-      "donor_decision": "PORT. Autosave не stream, chunk admission while backlog<256KB;real reliable backlog across channels. Atimal WAN512KB window и compression дополняют, но window не отменяет backpressure. UI transfer progress по выбранному UI.",
+      "integration_note": "PORT. Do not stream autosaves; admit chunks while reliable backlog across channels is below 256 KB. Atimal WAN 512 KB window and compression complement this; a larger window does not replace backpressure. Route progress through the selected UI.",
+      "donor_decision": "PORT. Do not stream autosaves; admit chunks while reliable backlog across channels is below 256 KB. Atimal WAN 512 KB window and compression complement this; a larger window does not replace backpressure. Route progress through the selected UI.",
       "runtime_status": null,
       "commits": [
         {
@@ -1270,7 +1270,7 @@
     {
       "id": "tokela/T09",
       "source_map": "changes-tokela.json",
-      "title": "Panel role/mod diagnostics/backups3baf97b;kit installer diagnostics, SaveXfer safe backups",
+      "title": "Panel role/mod diagnostics/backups `3baf97b`; kit installer diagnostics and safe SaveXfer backups.",
       "phases": [
         "P2",
         "P9",
@@ -1282,8 +1282,8 @@
         "F23"
       ],
       "disposition": "manual-port/adapt",
-      "integration_note": "PORT/OPTIONAL. Role assignment связан с текущим net lifecycle; диагностический kit отдельный. Совместить с save atomic commit, не плодить несколько backup каталогов.",
-      "donor_decision": "PORT/OPTIONAL. Role assignment связан с текущим net lifecycle; диагностический kit отдельный. Совместить с save atomic commit, не плодить несколько backup каталогов.",
+      "integration_note": "PORT/OPTIONAL. Role assignment depends on the current network lifecycle; diagnostic kits are separate tooling. Combine backups with atomic save commit instead of creating several competing backup directories.",
+      "donor_decision": "PORT/OPTIONAL. Role assignment depends on the current network lifecycle; diagnostic kits are separate tooling. Combine backups with atomic save commit instead of creating several competing backup directories.",
       "runtime_status": null,
       "commits": [
         {
@@ -1295,7 +1295,7 @@
     {
       "id": "tokela/T10",
       "source_map": "changes-tokela.json",
-      "title": "Dismiss sync c21e682 + wanderac0dc02;EngineDismiss.cpp, ReplicatorDismiss.cpp, Wire protocol59, Plugin, SaveXfer",
+      "title": "Dismissal sync `c21e682` and wandering `ac0dc02`; EngineDismiss.cpp, ReplicatorDismiss.cpp, wire protocol 59, Plugin, SaveXfer.",
       "phases": [
         "P7",
         "P8"
@@ -1306,8 +1306,8 @@
         "F15"
       ],
       "disposition": "manual-port/adapt",
-      "integration_note": "PORT. Новая функциональность относительно atimal0.54, Brandon/Savas не дают эквивалентных файлов. Явный lifecycle dismiss→NPC→wander и blacklist/recruit resolver;зависит от общей identity/authority и save cleanup. Проверить повторный recruit/rejoin, не воскресить dismissed character из stale census.",
-      "donor_decision": "PORT. Новая функциональность относительно atimal0.54, Brandon/Savas не дают эквивалентных файлов. Явный lifecycle dismiss→NPC→wander и blacklist/recruit resolver;зависит от общей identity/authority и save cleanup. Проверить повторный recruit/rejoin, не воскресить dismissed character из stale census.",
+      "integration_note": "PORT. Additional functionality beyond atimal 0.54; Brandon/Savas have no equivalent files. Explicit dismiss→NPC→wander lifecycle, blacklist and recruit resolution depend on shared identity/authority and save cleanup. Test re-recruit/rejoin and prevent stale census from resurrecting dismissed characters.",
+      "donor_decision": "PORT. Additional functionality beyond atimal 0.54; Brandon/Savas have no equivalent files. Explicit dismiss→NPC→wander lifecycle, blacklist and recruit resolution depend on shared identity/authority and save cleanup. Test re-recruit/rejoin and prevent stale census from resurrecting dismissed characters.",
       "runtime_status": null,
       "commits": [
         {
@@ -1323,7 +1323,7 @@
     {
       "id": "tokela/T11",
       "source_map": "changes-tokela.json",
-      "title": "Save/load audit20f57ce:Plugin/SaveXfer state machine + Inbound и EngineInternal save hooks",
+      "title": "Save/load audit `20f57ce`: Plugin/SaveXfer state machine, Inbound and EngineInternal save hooks.",
       "phases": [
         "P2",
         "P5"
@@ -1333,8 +1333,8 @@
         "F17"
       ],
       "disposition": "manual-port/adapt",
-      "integration_note": "PORT/CHOICE. Большой переписанный поток, не isolated fix. Сопоставить с Savas0c90ef8 atomic/loadable safe commit, BrandonREADY, atimal inventory fence/compression. Составить единую матрицу состояний и timeout rollback.",
-      "donor_decision": "PORT/CHOICE. Большой переписанный поток, не isolated fix. Сопоставить с Savas0c90ef8 atomic/loadable safe commit, BrandonREADY, atimal inventory fence/compression. Составить единую матрицу состояний и timeout rollback.",
+      "integration_note": "PORT/CHOICE. A substantial flow rewrite, not an isolated fix. Reconcile with Savas `0c90ef8` atomic/loadable commit, Brandon READY and atimal inventory fence/compression. Define one state matrix with timeout rollback.",
+      "donor_decision": "PORT/CHOICE. A substantial flow rewrite, not an isolated fix. Reconcile with Savas `0c90ef8` atomic/loadable commit, Brandon READY and atimal inventory fence/compression. Define one state matrix with timeout rollback.",
       "runtime_status": null,
       "commits": [
         {
@@ -1350,7 +1350,7 @@
     {
       "id": "tokela/T12",
       "source_map": "changes-tokela.json",
-      "title": "Steam UX:invite3b3fdc2, remember friend a55d3c0+866e461, rich presence join27ddf54, callbackad979ac (GameLobbyJoinRequested_t: callback 533 → 333)",
+      "title": "Steam UX: invites `3b3fdc2`, remembered friend `a55d3c0`/`866e461`, rich-presence join `27ddf54`, callback `ad979ac` (GameLobbyJoinRequested_t: 533→333).",
       "phases": [
         "P2",
         "P9"
@@ -1359,8 +1359,8 @@
         "F18"
       ],
       "disposition": "manual-port/adapt",
-      "integration_note": "Savas585 всё ещё имеет callback533; исправление333 действительно требуется, остальной UX свести.",
-      "donor_decision": "PORT/CHOICE с Savas aaea80a/multi-player lobby. Callback fix маленький, но surrounding lobby API отличается. Одна callback owner и shutdown lifetime;join flow на каждом из 4/8 IDs.",
+      "integration_note": "Savas585 still uses callback 533; correction to 333 is required. Consolidate the remaining UX.",
+      "donor_decision": "PORT/CHOICE with Savas `aaea80a` and multiplayer lobby. The callback correction is small, but surrounding APIs differ. Use one callback owner and shutdown lifetime; test join for all 4/8-player IDs.",
       "runtime_status": null,
       "commits": [
         {
@@ -1388,7 +1388,7 @@
     {
       "id": "tokela/T13",
       "source_map": "changes-tokela.json",
-      "title": "Update notice e41c2d1 и Workshop17ffc7a",
+      "title": "Update notice `e41c2d1` and Workshop `17ffc7a`.",
       "phases": [
         "P11"
       ],
@@ -1396,8 +1396,8 @@
         "F23"
       ],
       "disposition": "manual-port/adapt",
-      "integration_note": "OPTIONAL. Notice vs Brandon paired updater — выбрать продуктовую политику. Publish scripts, item3823660945, branding/asset URLs нельзя брать как общую инфраструктуру без перенастройки.",
-      "donor_decision": "OPTIONAL. Notice vs Brandon paired updater — выбрать продуктовую политику. Publish scripts, item3823660945, branding/asset URLs нельзя брать как общую инфраструктуру без перенастройки.",
+      "integration_note": "OPTIONAL. Choose a product policy for update notices versus the Brandon paired updater. Publishing scripts, Workshop item 3823660945, branding and asset URLs require reconfiguration.",
+      "donor_decision": "OPTIONAL. Choose a product policy for update notices versus the Brandon paired updater. Publishing scripts, Workshop item 3823660945, branding and asset URLs require reconfiguration.",
       "runtime_status": null,
       "commits": [
         {
@@ -1413,7 +1413,7 @@
     {
       "id": "tokela/T14",
       "source_map": "changes-tokela.json",
-      "title": "**Не-main**5e5cd42 internet profile, picker refresh, RE_Kenshi Workshop installer;ReplicatorDrive/Channels/Config",
+      "title": "Additional branch: `5e5cd42` internet profile, picker refresh and RE_Kenshi Workshop installer; ReplicatorDrive/Channels/Config.",
       "phases": [
         "P7",
         "P11"
@@ -1424,8 +1424,8 @@
         "F23"
       ],
       "disposition": "manual-port/adapt",
-      "integration_note": "PORT/OPTIONAL. LAN/internet profiles влияют interp, walk-source velocity, stale thresholds. Benchmark совместно с B02100Hz, atimal timeouts, save compression. Не принимать каждый WAN default независимо.",
-      "donor_decision": "PORT/OPTIONAL. LAN/internet profiles влияют interp, walk-source velocity, stale thresholds. Benchmark совместно с B02100Hz, atimal timeouts, save compression. Не принимать каждый WAN default независимо.",
+      "integration_note": "PORT/OPTIONAL. LAN/internet profiles affect interpolation, walk-source velocity and stale thresholds. Benchmark with B02 100 Hz pacing, atimal timeouts and save compression. Do not adopt every WAN default independently.",
+      "donor_decision": "PORT/OPTIONAL. LAN/internet profiles affect interpolation, walk-source velocity and stale thresholds. Benchmark with B02 100 Hz pacing, atimal timeouts and save compression. Do not adopt every WAN default independently.",
       "runtime_status": null,
       "commits": [
         {
@@ -1437,7 +1437,7 @@
     {
       "id": "tokela/T15",
       "source_map": "changes-tokela.json",
-      "title": "**Не-main**b3bd37b shutdown hook + presence-authority default off;Plugin::steamShutdown_hook/installSteamShutdownHook, SteamP2P::markDown, Config",
+      "title": "Additional branch: `b3bd37b` shutdown hook and presence-authority default off; Plugin::steamShutdown_hook/installSteamShutdownHook, SteamP2P::markDown, Config.",
       "phases": [
         "P2",
         "P7"
@@ -1447,8 +1447,8 @@
         "F15"
       ],
       "disposition": "manual-port/adapt",
-      "integration_note": "PORT HIGH PRIORITY. До SteamAPI_Shutdown остановить net(1500ms), goodbye, leave lobby, P2P sessions;если thread еще жив, Steam DLL не unload. Отдельно policy cellAuth=false:автор обнаружил 18 leaked copies в бою на cell boundary;регрессионные tests шли с authority off. Это не универсальное исправление протокола authority, держать flagoff до отдельного решения.",
-      "donor_decision": "PORT HIGH PRIORITY. До SteamAPI_Shutdown остановить net(1500ms), goodbye, leave lobby, P2P sessions;если thread еще жив, Steam DLL не unload. Отдельно policy cellAuth=false:автор обнаружил 18 leaked copies в бою на cell boundary;регрессионные tests шли с authority off. Это не универсальное исправление протокола authority, держать flagoff до отдельного решения.",
+      "integration_note": "PORT, HIGH PRIORITY. Before SteamAPI_Shutdown, stop networking (1500 ms), send goodbye, leave the lobby and close P2P sessions; do not unload Steam while the thread is alive. Separately, cellAuth=false reflects the author finding 18 leaked copies in a cell-boundary fight; regressions ran with authority off. Keep that flag off pending a dedicated authority solution; this is not a universal protocol fix.",
+      "donor_decision": "PORT, HIGH PRIORITY. Before SteamAPI_Shutdown, stop networking (1500 ms), send goodbye, leave the lobby and close P2P sessions; do not unload Steam while the thread is alive. Separately, cellAuth=false reflects the author finding 18 leaked copies in a cell-boundary fight; regressions ran with authority off. Keep that flag off pending a dedicated authority solution; this is not a universal protocol fix.",
       "runtime_status": null,
       "commits": [
         {
@@ -1460,7 +1460,7 @@
     {
       "id": "tokela/A01",
       "source_map": "changes-tokela.json",
-      "title": "Save-native world items4819bd8,2a08851, a7446dd (merges7795a51/6c1835b):unannounced ground structural baseline, owner pickup notice",
+      "title": "Save-native world items `4819bd8`, `2a08851`, `a7446dd` (merges `7795a51`/`6c1835b`): structural baseline for unannounced ground items and owner pickup notice.",
       "phases": [
         "P4",
         "P6"
@@ -1469,8 +1469,8 @@
         "F10"
       ],
       "disposition": "manual-port/adapt",
-      "integration_note": "CHOICE с Savasd82a496 и shared base conservation. Один источник announce/remove и одна native-item baseline;проверить late cell load/native pickup/drop.",
-      "donor_decision": "CHOICE с Savasd82a496 и shared base conservation. Один источник announce/remove и одна native-item baseline;проверить late cell load/native pickup/drop.",
+      "integration_note": "CHOICE with Savas `d82a496` and shared conservation ancestry. Use one announce/remove source and one native-item baseline; test late cell load, native pickup and drops.",
+      "donor_decision": "CHOICE with Savas `d82a496` and shared conservation ancestry. Use one announce/remove source and one native-item baseline; test late cell load, native pickup and drops.",
       "runtime_status": null,
       "commits": [
         {
@@ -1502,7 +1502,7 @@
     {
       "id": "tokela/A02",
       "source_map": "changes-tokela.json",
-      "title": "Host-canonical production intent0ddeb29…ae9425a (merge367f574);HostIntent.h, Wire, NetLink, Inbound, ReplicatorChannels publish/applyProdIntents, EngineWorld recipe identity",
+      "title": "Host-canonical production intents `0ddeb29`…`ae9425a` (merge `367f574`); HostIntent.h, Wire, NetLink, Inbound, ReplicatorChannels::publish/applyProdIntents, EngineWorld recipe identity.",
       "phases": [
         "P6"
       ],
@@ -1510,8 +1510,8 @@
         "F11"
       ],
       "disposition": "manual-port/adapt",
-      "integration_note": "PORT coherent channel. Не дублировать Savas host-only operate gate f80779e/e5ad2ef:совместимы по разным уровням, но intent применения рецепта и output simulation должны оба быть host-only с ACK/retry/session reset.",
-      "donor_decision": "PORT coherent channel. Не дублировать Savas host-only operate gate f80779e/e5ad2ef:совместимы по разным уровням, но intent применения рецепта и output simulation должны оба быть host-only с ACK/retry/session reset.",
+      "integration_note": "PORT as a coherent channel. Coordinate with Savas host-only operate gates `f80779e`/`e5ad2ef`: these act at different levels, but both recipe intents and output simulation need host authority, ACK/retry and session reset.",
+      "donor_decision": "PORT as a coherent channel. Coordinate with Savas host-only operate gates `f80779e`/`e5ad2ef`: these act at different levels, but both recipe intents and output simulation need host authority, ACK/retry and session reset.",
       "runtime_status": null,
       "commits": [
         {
@@ -1535,7 +1535,7 @@
     {
       "id": "tokela/A03",
       "source_map": "changes-tokela.json",
-      "title": "Doors c7c41df…d0ac696(merge842c0a1);publish/applyDoorIntents/BuildDoors, Engine native state",
+      "title": "Doors `c7c41df`…`d0ac696` (merge `842c0a1`); publish/applyDoorIntents/BuildDoors and native engine state.",
       "phases": [
         "P6"
       ],
@@ -1543,8 +1543,8 @@
         "F12"
       ],
       "disposition": "manual-port/adapt",
-      "integration_note": "PORT/CHOICE. Один host arbiter, а не symmetric last-arrival writes. Конфликт с Brandon f72e72b shared lock и Savas old channels.",
-      "donor_decision": "PORT/CHOICE. Один host arbiter, а не symmetric last-arrival writes. Конфликт с Brandon f72e72b shared lock и Savas old channels.",
+      "integration_note": "PORT/CHOICE. Use one host arbiter rather than symmetric last-arrival writes. Conflicts with Brandon `f72e72b` shared locks and older Savas channels.",
+      "donor_decision": "PORT/CHOICE. Use one host arbiter rather than symmetric last-arrival writes. Conflicts with Brandon `f72e72b` shared locks and older Savas channels.",
       "runtime_status": null,
       "commits": [
         {
@@ -1564,7 +1564,7 @@
     {
       "id": "tokela/A04",
       "source_map": "changes-tokela.json",
-      "title": "Furniture 2aac9ab…e78c8cb(mergee13f470);bed/cage occupancy intents, readable target translation",
+      "title": "Furniture `2aac9ab`…`e78c8cb` (merge `e13f470`); bed/cage occupancy intents and readable-target translation.",
       "phases": [
         "P6"
       ],
@@ -1572,8 +1572,8 @@
         "F13"
       ],
       "disposition": "manual-port/adapt",
-      "integration_note": "PORT/CHOICE. Host canonical occupancy+retry/idempotency, TokelaresolvePeerChar сохранен в merge. Согласовать с jobs/recruit/carry/cage-break91e1596, не совмещать two arbiters.",
-      "donor_decision": "PORT/CHOICE. Host canonical occupancy+retry/idempotency, TokelaresolvePeerChar сохранен в merge. Согласовать с jobs/recruit/carry/cage-break91e1596, не совмещать two arbiters.",
+      "integration_note": "PORT/CHOICE. Host-canonical occupancy, retries and idempotency; the merge preserves Tokela resolvePeerChar. Coordinate with jobs/recruit/carry/cage-break `91e1596`; avoid two arbiters.",
+      "donor_decision": "PORT/CHOICE. Host-canonical occupancy, retries and idempotency; the merge preserves Tokela resolvePeerChar. Coordinate with jobs/recruit/carry/cage-break `91e1596`; avoid two arbiters.",
       "runtime_status": null,
       "commits": [
         {
@@ -1593,7 +1593,7 @@
     {
       "id": "tokela/A05",
       "source_map": "changes-tokela.json",
-      "title": "Build ownershipddd65cd…649c260;place/remove19b54bc…7e22633(mergef9f776c), progress9d5ebda",
+      "title": "Building ownership `ddd65cd`…`649c260`; place/remove `19b54bc`…`7e22633` (merge `f9f776c`), progress `9d5ebda`.",
       "phases": [
         "P6"
       ],
@@ -1601,8 +1601,8 @@
         "F12"
       ],
       "disposition": "manual-port/adapt",
-      "integration_note": "PORT coherent channel. Placement/deed ownership, host accept/reject, placer progress — разные axes. Не терять восстановленный join->host progress при переходе на host canonical create/remove.",
-      "donor_decision": "PORT coherent channel. Placement/deed ownership, host accept/reject, placer progress — разные axes. Не терять восстановленный join->host progress при переходе на host canonical create/remove.",
+      "integration_note": "PORT as a coherent channel. Placement/deed ownership, host accept/reject and placer progress are separate dimensions. Preserve restored join-to-host progress when moving create/remove to host authority.",
+      "donor_decision": "PORT as a coherent channel. Placement/deed ownership, host accept/reject and placer progress are separate dimensions. Preserve restored join-to-host progress when moving create/remove to host authority.",
       "runtime_status": null,
       "commits": [
         {
@@ -1626,7 +1626,7 @@
     {
       "id": "tokela/A06",
       "source_map": "changes-tokela.json",
-      "title": "Inventory pre-save fence365de06…c4ed990(merge313521d), title ACKf35bc07",
+      "title": "Inventory pre-save fence `365de06`…`c4ed990` (merge `313521d`), title-screen ACK `f35bc07`.",
       "phases": [
         "P5"
       ],
@@ -1634,8 +1634,8 @@
         "F05"
       ],
       "disposition": "manual-port/adapt",
-      "integration_note": "PORT после inventory и до save transaction. Stable inventories flush before save ACK;join not gameplay yet ACK немедленно, иначе bootstrap deadlock. Совместить с B02 READY и metadata/jobs flush в один checkpoint.",
-      "donor_decision": "PORT после inventory и до save transaction. Stable inventories flush before save ACK;join not gameplay yet ACK немедленно, иначе bootstrap deadlock. Совместить с B02 READY и metadata/jobs flush в один checkpoint.",
+      "integration_note": "PORT after inventory and before the save transaction. Flush stable inventories before ACK. A join not yet in gameplay must ACK immediately to avoid bootstrap deadlock. Combine with B02 READY and metadata/jobs flush in one checkpoint.",
+      "donor_decision": "PORT after inventory and before the save transaction. Flush stable inventories before ACK. A join not yet in gameplay must ACK immediately to avoid bootstrap deadlock. Combine with B02 READY and metadata/jobs flush in one checkpoint.",
       "runtime_status": null,
       "commits": [
         {
@@ -1651,7 +1651,7 @@
     {
       "id": "tokela/A07",
       "source_map": "changes-tokela.json",
-      "title": "Bounty/crimef764b33+40cc619(mergec55753f), per-sender stale guard8019a5a/79cbafe+cdc9259",
+      "title": "Bounty/crime `f764b33`/`40cc619` (merge `c55753f`), per-sender stale guards `8019a5a`/`79cbafe`/`cdc9259`.",
       "phases": [
         "P6",
         "P8"
@@ -1661,8 +1661,8 @@
         "F21"
       ],
       "disposition": "manual-port/adapt",
-      "integration_note": "PORT. Host canonical crime/bounty;H2 witness-local limitations признаны design. StaleGuard reusable helper;door/deed/fixture seq guard и каждый sender отдельно. Не копировать старые door authority вместе с helper.",
-      "donor_decision": "PORT. Host canonical crime/bounty;H2 witness-local limitations признаны design. StaleGuard reusable helper;door/deed/fixture seq guard и каждый sender отдельно. Не копировать старые door authority вместе с helper.",
+      "integration_note": "PORT. Host-canonical crime/bounty; H2 witness-local limitations are acknowledged in the design. Reuse StaleGuard for door/deed/fixture sequences per sender. Do not import older door authority alongside the helper.",
+      "donor_decision": "PORT. Host-canonical crime/bounty; H2 witness-local limitations are acknowledged in the design. Reuse StaleGuard for door/deed/fixture sequences per sender. Do not import older door authority alongside the helper.",
       "runtime_status": null,
       "commits": [
         {
@@ -1682,7 +1682,7 @@
     {
       "id": "tokela/A08",
       "source_map": "changes-tokela.json",
-      "title": "Ancillary community fixes:money8b748dc/b530327, researchbacbb3a, carried-healf281803, cage-break91e1596, interp7ea3fd0/487f0c9, chase-anchor830e62d, assassinationd2b305a/336ca2a, portrait018633f, charname+age90d0dad",
+      "title": "Community fixes: money `8b748dc`/`b530327`, research `bacbb3a`, carried healing `f281803`, cage break `91e1596`, interpolation `7ea3fd0`/`487f0c9`, chase anchor `830e62d`, assassination `d2b305a`/`336ca2a`, portrait `018633f`, character name/animal age `90d0dad`.",
       "phases": [
         "P4",
         "P6",
@@ -1699,8 +1699,8 @@
         "F21"
       ],
       "disposition": "manual-port/adapt",
-      "integration_note": "PORT/CHOICE с Savas/Brandon:число проблем уже пересекается. Money actual wallet+clamp vs Savas delta reconciliation;research grow-only union НЕ заменяет Savas book-cost authoritya6c97be;carry fix не заменяет carrier visibility58514ea;перенести тесты и отсутствующие семантические части после diff текущих функций.",
-      "donor_decision": "PORT/CHOICE с Savas/Brandon:число проблем уже пересекается. Money actual wallet+clamp vs Savas delta reconciliation;research grow-only union НЕ заменяет Savas book-cost authoritya6c97be;carry fix не заменяет carrier visibility58514ea;перенести тесты и отсутствующие семантические части после diff текущих функций.",
+      "integration_note": "PORT/CHOICE with Savas/Brandon; several problems overlap. Actual-wallet/clamp money handling differs from Savas delta reconciliation. Grow-only research union does not replace Savas book-cost authority `a6c97be`; carried healing does not replace carrier visibility `58514ea`. Compare current functions, then port tests and missing semantics.",
+      "donor_decision": "PORT/CHOICE with Savas/Brandon; several problems overlap. Actual-wallet/clamp money handling differs from Savas delta reconciliation. Grow-only research union does not replace Savas book-cost authority `a6c97be`; carried healing does not replace carrier visibility `58514ea`. Compare current functions, then port tests and missing semantics.",
       "runtime_status": null,
       "commits": [
         {
@@ -1760,7 +1760,7 @@
     {
       "id": "tokela/A09",
       "source_map": "changes-tokela.json",
-      "title": "**Storage add**5add227+a578b43;WireStoreAdd/INV_FLAG_STORE, detectAndPublishTransfers/applyStoreAdds",
+      "title": "Storage add `5add227`/`a578b43`; WireStoreAdd/INV_FLAG_STORE, detectAndPublishTransfers/applyStoreAdds.",
       "phases": [
         "P4",
         "P5"
@@ -1769,8 +1769,8 @@
         "F07"
       ],
       "disposition": "reimplemented-for-conservation-invariant",
-      "integration_note": "Переработать StoreAdd как conserved intent с доказанным источником; исходный positive-mint writer не переносить.",
-      "donor_decision": "PORT WITH REDESIGN/CHOICE с B03. Join settled positive store diff без paired source loss создает explicit add;host валидирует sender, id, key, qty, template и dedup4096IDs, но не доказывает source provenance. Нельзя автоматически объявить conservation-safe и включить рядом с другим transfer protocol. Нужны source/recipe proof или authoritative operation ledger и causal inventory transaction.",
+      "integration_note": "Redesign StoreAdd as a conserved intent with a proven source; do not port its independent positive-mint writer.",
+      "donor_decision": "PORT WITH REDESIGN/CHOICE with B03. A settled positive join-side store difference creates an explicit addition without paired source loss. Host validates sender, ID, key, quantity, template and deduplicates 4096 IDs, but does not prove source provenance. Require source/recipe proof or an authoritative operation ledger and causal inventory transaction before enabling beside other transfers.",
       "runtime_status": null,
       "commits": [
         {
@@ -1786,7 +1786,7 @@
     {
       "id": "tokela/A10",
       "source_map": "changes-tokela.json",
-      "title": "Severed-limb announce8ee84e0,5ff604e, f2cc3af;ReplicatorItems promote baseline within15m",
+      "title": "Severed-limb announcement `8ee84e0`, `5ff604e`, `f2cc3af`; ReplicatorItems promotes the baseline within 15 m.",
       "phases": [
         "P4",
         "P7"
@@ -1796,8 +1796,8 @@
         "F14"
       ],
       "disposition": "manual-port/adapt",
-      "integration_note": "PORT после A01/T07. Объявление newly severed item исключает save-native baseline suppression;роль creator и announce должны совпадать. Range-based sid matching рискует захватить чужую одновременную конечность;проверить burst/amputateboth.",
-      "donor_decision": "PORT после A01/T07. Объявление newly severed item исключает save-native baseline suppression;роль creator и announce должны совпадать. Range-based sid matching рискует захватить чужую одновременную конечность;проверить burst/amputateboth.",
+      "integration_note": "PORT after A01/T07. Announce newly severed items despite save-native baseline suppression; creator role and announcement must agree. Range-based SID matching may capture another simultaneous limb; test bursts and amputations on both sides.",
+      "donor_decision": "PORT after A01/T07. Announce newly severed items despite save-native baseline suppression; creator role and announcement must agree. Range-based SID matching may capture another simultaneous limb; test bursts and amputations on both sides.",
       "runtime_status": null,
       "commits": [
         {
@@ -1813,7 +1813,7 @@
     {
       "id": "tokela/A11",
       "source_map": "changes-tokela.json",
-      "title": "Inventory UI guard94f99fc +2b3b821;defer co-op item ops while UI open",
+      "title": "Inventory UI guard `94f99fc`/`2b3b821`; defer co-op item operations while the UI is open.",
       "phases": [
         "P4"
       ],
@@ -1822,8 +1822,8 @@
         "F07"
       ],
       "disposition": "manual-port/adapt",
-      "integration_note": "PORT/semantic overlaps B03 and Savas UI deferrals. Один per-container guard для всех mutation callers, очередь должна дренироваться после close. Нельзя defer snapshot, но применять relocation/destroy из другого канала под тем же UI.",
-      "donor_decision": "PORT/semantic overlaps B03 and Savas UI deferrals. Один per-container guard для всех mutation callers, очередь должна дренироваться после close. Нельзя defer snapshot, но применять relocation/destroy из другого канала под тем же UI.",
+      "integration_note": "PORT; semantic overlap with B03 and Savas UI deferrals. Use one per-container guard for every mutation caller and drain the queue after close. Deferring snapshots is insufficient if another channel still relocates/destroys items under the same UI.",
+      "donor_decision": "PORT; semantic overlap with B03 and Savas UI deferrals. Use one per-container guard for every mutation caller and drain the queue after close. Deferring snapshots is insufficient if another channel still relocates/destroys items under the same UI.",
       "runtime_status": null,
       "commits": [
         {
@@ -1835,7 +1835,7 @@
     {
       "id": "tokela/A12",
       "source_map": "changes-tokela.json",
-      "title": "Medical e6a96db:writeMedical legitimate negative flesh clamp±maxHP, optimistic pending bandage3s, applyTreatments force next publish",
+      "title": "Medical `e6a96db`: writeMedical accepts legitimate negative flesh values clamped to ±maxHP, 3 s optimistic pending-bandage overlay, applyTreatments forces the next publish.",
       "phases": [
         "P7"
       ],
@@ -1843,8 +1843,8 @@
         "F14"
       ],
       "disposition": "manual-port/adapt",
-      "integration_note": "PORT. Сохранить distinction unreadable slot sentinel vs valid negative health;bandage overlay не authority на flesh. Тест на overkill, healing convergence, robot limbs, multi-healer, reordering.",
-      "donor_decision": "PORT. Сохранить distinction unreadable slot sentinel vs valid negative health;bandage overlay не authority на flesh. Тест на overkill, healing convergence, robot limbs, multi-healer, reordering.",
+      "integration_note": "PORT. Distinguish unreadable-slot sentinel from valid negative health; the bandage overlay does not authorize flesh state. Test overkill, healing convergence, robot limbs, multiple healers and reordering.",
+      "donor_decision": "PORT. Distinguish unreadable-slot sentinel from valid negative health; the bandage overlay does not authorize flesh state. Test overkill, healing convergence, robot limbs, multiple healers and reordering.",
       "runtime_status": null,
       "commits": [
         {
@@ -1856,7 +1856,7 @@
     {
       "id": "tokela/A13",
       "source_map": "changes-tokela.json",
-      "title": "WAN f770a32 pin ENet throttle/timeout,014a1e1512KB send window, d262ede miniz compressed connect save (protocol67),39012fe WAN save tests",
+      "title": "WAN `f770a32` pins ENet throttle/timeouts, `014a1e1` adds a 512 KB send window, `d262ede` adds miniz-compressed connect saves (protocol 67), `39012fe` adds WAN save tests.",
       "phases": [
         "P2",
         "P5",
@@ -1867,8 +1867,8 @@
         "F20"
       ],
       "disposition": "manual-port/adapt",
-      "integration_note": "PORT. New wire fields/limits+miniz build inclusion. Требует validation compressed/uncompressed lengths, atomic decode to staging и backpressureT08. ENet exact patched headers/ABI надо закрепить;GNS base не должен получать ENet internals.",
-      "donor_decision": "PORT. New wire fields/limits+miniz build inclusion. Требует validation compressed/uncompressed lengths, atomic decode to staging и backpressureT08. ENet exact patched headers/ABI надо закрепить;GNS base не должен получать ENet internals.",
+      "integration_note": "PORT. Requires new wire fields/limits and miniz build inclusion. Validate compressed/uncompressed lengths, decode atomically into staging and retain T08 backpressure. Pin exact patched ENet headers/ABI; keep ENet internals out of a GNS backend.",
+      "donor_decision": "PORT. Requires new wire fields/limits and miniz build inclusion. Validate compressed/uncompressed lengths, decode atomically into staging and retain T08 backpressure. Pin exact patched ENet headers/ABI; keep ENet internals out of a GNS backend.",
       "runtime_status": null,
       "commits": [
         {
@@ -1892,7 +1892,7 @@
     {
       "id": "tokela/A14",
       "source_map": "changes-tokela.json",
-      "title": "Loaded-save join squad0f2d565, b3ba407, d200848, d55c22c, c76c53c,4b3d020, c5c97a0;Plugin connect push dwell6s + PlayerInterface::createSquad/setFaction",
+      "title": "Loaded-save join squad `0f2d565`, `b3ba407`, `d200848`, `d55c22c`, `c76c53c`, `4b3d020`, `c5c97a0`; Plugin connect-push dwell of 6 s and PlayerInterface::createSquad/setFaction.",
       "phases": [
         "P8"
       ],
@@ -1900,8 +1900,8 @@
         "F04"
       ],
       "disposition": "manual-port/adapt",
-      "integration_note": "PORT/CHOICE с Savas fresh-NewGame chargen. Atimal создает squad для loaded save;Savas ограничивает freshness иначе. Явно согласовать продуктовую policy и stable player→tab mapping;не переносить один fixed wait без visibility condition.",
-      "donor_decision": "PORT/CHOICE с Savas fresh-NewGame chargen. Atimal создает squad для loaded save;Savas ограничивает freshness иначе. Явно согласовать продуктовую policy и stable player→tab mapping;не переносить один fixed wait без visibility condition.",
+      "integration_note": "PORT/CHOICE with Savas fresh-NewGame character generation. Atimal creates a squad for a loaded save; Savas imposes different freshness restrictions. Define the product policy and stable player-to-tab mapping explicitly. Replace fixed waiting alone with a visibility condition.",
+      "donor_decision": "PORT/CHOICE with Savas fresh-NewGame character generation. Atimal creates a squad for a loaded save; Savas imposes different freshness restrictions. Define the product policy and stable player-to-tab mapping explicitly. Replace fixed waiting alone with a visibility condition.",
       "runtime_status": null,
       "commits": [
         {
@@ -1933,7 +1933,7 @@
     {
       "id": "tokela/A15",
       "source_map": "changes-tokela.json",
-      "title": "Host loss paused2ffeae, stale census freeze3c582c2/e50ac34(2.5s silence, wire-key lookup)",
+      "title": "Host-loss pause `2ffeae`, stale-census freeze `3c582c2`/`e50ac34` (2.5 s silence, wire-key lookup).",
       "phases": [
         "P2",
         "P7",
@@ -1945,8 +1945,8 @@
         "F21"
       ],
       "disposition": "manual-port/adapt",
-      "integration_note": "PORT. Единая pause reasons машина с B07. Freeze устаревших NPC не заменяет authority lease/session epoch. После network recovery разморозка и fresh truth, после reconnect stale queues discard.",
-      "donor_decision": "PORT. Единая pause reasons машина с B07. Freeze устаревших NPC не заменяет authority lease/session epoch. После network recovery разморозка и fresh truth, после reconnect stale queues discard.",
+      "integration_note": "PORT. Use one pause-reason state machine with B07. Freezing stale NPCs does not replace authority leases/session epochs. Unfreeze against fresh truth after network recovery; discard stale queues on reconnect.",
+      "donor_decision": "PORT. Use one pause-reason state machine with B07. Freezing stale NPCs does not replace authority leases/session epochs. Unfreeze against fresh truth after network recovery; discard stale queues on reconnect.",
       "runtime_status": null,
       "commits": [
         {
@@ -1958,7 +1958,7 @@
     {
       "id": "tokela/A16",
       "source_map": "changes-tokela.json",
-      "title": "Merchant4f695f0+057444e, regression fix**b920e9e**, version-only301d7bf",
+      "title": "Merchant `4f695f0`/`057444e`, regression fix `b920e9e`, version-only `301d7bf`.",
       "phases": [
         "P5"
       ],
@@ -1966,8 +1966,8 @@
         "F08"
       ],
       "disposition": "manual-port/adapt",
-      "integration_note": "Брать исправленный merchant путь вместе с b920e9e и chest regression.",
-      "donor_decision": "CHOICE с B03/Savas trading. Exact layout code **обязательно ограничить shop shelves BCTYPE_USABLE и feature flag**. По source до b920e9e plain building chest шел layout-path и оказывался пустым даже при merchant syncoff. Нельзя брать только headline0.60 commit:сам runtime fix в b920e9e.",
+      "integration_note": "Use the corrected merchant path together with b920e9e and a chest regression test.",
+      "donor_decision": "CHOICE with B03/Savas trading. Restrict exact layout to BCTYPE_USABLE shop shelves and the feature flag. Before `b920e9e`, a plain building chest entered the layout path and appeared empty even with merchant sync off. The runtime fix is in `b920e9e`, not merely the headline 0.60 commit.",
       "runtime_status": null,
       "commits": [
         {
@@ -1991,7 +1991,7 @@
     {
       "id": "tokela/A17",
       "source_map": "changes-tokela.json",
-      "title": "New test scenarios:shared_fight_parity64ed02a+0952396+d342855+32050b6+d7972f5, store_join_addff25a81, existence_gatec4ce9f0, npc_aggrodaba149, rejoin_bagfa0cd97, save_squadmeta1d469b2…b529fa3, join_squad_loaded, kidnap_syncc1705bc+2e7fdb7",
+      "title": "Scenarios: shared_fight_parity `64ed02a`/`0952396`/`d342855`/`32050b6`/`d7972f5`, store_join_add `ff25a81`, existence_gate `c4ce9f0`, npc_aggro `daba149`, rejoin_bag `fa0cd97`, save_squadmeta `1d469b2`…`b529fa3`, join_squad_loaded, kidnap_sync `c1705bc`/`2e7fdb7`.",
       "phases": [
         "P4",
         "P5",
@@ -2004,8 +2004,8 @@
         "F22"
       ],
       "disposition": "manual-port/adapt",
-      "integration_note": "REUSE. Метрики/polarity/oracles читать;absent-on-both permitted в shared_fight_parity означает agreement, но не proof existence. Pair с existence_gate. Hostile fights compare against actual baseline и avoid fixed English templates.",
-      "donor_decision": "REUSE. Метрики/polarity/oracles читать;absent-on-both permitted в shared_fight_parity означает agreement, но не proof existence. Pair с existence_gate. Hostile fights compare against actual baseline и avoid fixed English templates.",
+      "integration_note": "REUSE. Inspect metric definitions, polarity and oracles. Allowing absent-on-both in shared_fight_parity establishes agreement, not existence; pair with existence_gate. Compare hostile fights with the actual baseline and avoid fixed English template names.",
+      "donor_decision": "REUSE. Inspect metric definitions, polarity and oracles. Allowing absent-on-both in shared_fight_parity establishes agreement, not existence; pair with existence_gate. Compare hostile fights with the actual baseline and avoid fixed English template names.",
       "runtime_status": null,
       "commits": [
         {
@@ -2049,7 +2049,7 @@
     {
       "id": "detached/K01",
       "source_map": "changes-detached.json",
-      "title": "**Транспортный слой вынесен в C ABI3**: `src/transport/TransportApi.h:8`, `Provider.cpp`, `SteamBackend.cpp`, `UdpBackend.cpp`; traffic classes GAME_RELIABLE/GAME_STATE/SAVE_BULK, retained backpressure, generation на событиях; `src/plugin/net/NativeFrame.h`, `NativeValues.h`, `NetLink.cpp` принимают этот framing. Dependencies pin GNS1.6.1 `d534c19a`, protobuf21.12 `f0dc78d7` в `src/transport/dependencies.json`.",
+      "title": "**Transport extracted behind C ABI 3**: `src/transport/TransportApi.h:8`, Provider.cpp, SteamBackend.cpp, UdpBackend.cpp; GAME_RELIABLE/GAME_STATE/SAVE_BULK traffic classes, retained backpressure, event generations. `src/plugin/net/NativeFrame.h`, NativeValues.h and NetLink.cpp consume this framing. Dependencies pin GNS 1.6.1 `d534c19a` and protobuf 21.12 `f0dc78d7` in src/transport/dependencies.json.",
       "phases": [
         "P10"
       ],
@@ -2057,15 +2057,15 @@
         "F20"
       ],
       "disposition": "optional-transport-backend",
-      "integration_note": "Поздний optional transport backend с согласованной C ABI; не предпосылка item/save fixes.",
-      "donor_decision": "Нет; у Savas NetLink остаётся ENet/Steam tunnel. **Поздний backend**, не merge целого NetLink поверх Savas. Нужен единый Transport interface и общий DTO codec; сохранить ENet для сравнения/регрессии. Modern provider не должен переносить STL/CRT ownership через v100 boundary.",
+      "integration_note": "Late optional transport backend with a consistent C ABI; not a prerequisite for item/save fixes.",
+      "donor_decision": "Absent from Savas, which retains ENet/Steam tunnel NetLink. Late backend migration, not a wholesale NetLink merge over Savas. Define a Transport interface and shared DTO codec; retain ENet for regression comparison. Do not transfer STL/CRT ownership across the modern-provider/v100 boundary.",
       "runtime_status": "live-code-path-inspected",
       "commits": []
     },
     {
       "id": "detached/K02",
       "source_map": "changes-detached.json",
-      "title": "**Модульное native UI API4**: `src/ui/CoopUiApi.h:5`, `CoopUi.cpp`, `src/plugin/core/UiModule.cpp`; snapshot/command POD, UI callbacks только ставят команду, core исполняет её на game thread. Локализованные поля, lifecycle status/diagnostics, redact exporter в `UiPrivacy.h`.",
+      "title": "**Modular native UI API 4**: src/ui/CoopUiApi.h:5, CoopUi.cpp, src/plugin/core/UiModule.cpp; POD snapshots/commands. UI callbacks enqueue commands; core executes them on the game thread. Localized fields, lifecycle status/diagnostics and a redacting exporter in UiPrivacy.h.",
       "phases": [
         "P9",
         "P10"
@@ -2074,15 +2074,15 @@
         "F19"
       ],
       "disposition": "optional-native-ui-backend; shared-lineage",
-      "integration_note": "Один UI controller; общая ancestry с B01, ABI native view позднее.",
-      "donor_decision": "Нет этого UI; Savas имеет свой engine MyGUI multiplayer lobby. Портировать представление через adapter к общему Session API. Не грузить две конкурирующие панели/два connect flow одновременно.",
+      "integration_note": "One UI controller; shared ancestry with B01; native-view ABI later.",
+      "donor_decision": "Savas has its own engine MyGUI multiplayer lobby, not this UI. Adapt the view to a shared Session API. Avoid competing panels and independent connection flows.",
       "runtime_status": "live-code-path-inspected",
       "commits": []
     },
     {
       "id": "detached/K03",
       "source_map": "changes-detached.json",
-      "title": "**Четырёхкомпонентное обновление**: `src/plugin/net/Updater.cpp:234` fetch manifest; `UpdatePackage.*` parsePackageManifest/installPackage/recoverPackageForStartup, verified hashes, version ordering, rollback marker; `RuntimeImages.h` блокирует runtime loads во время replacement.",
+      "title": "**Four-component updater**: src/plugin/net/Updater.cpp:234 fetches a manifest; UpdatePackage.* parses/installs/recovers packages with verified hashes, version ordering and rollback marker. RuntimeImages.h blocks runtime loads during replacement.",
       "phases": [
         "P11"
       ],
@@ -2090,15 +2090,15 @@
         "F23"
       ],
       "disposition": "manual-port/adapt",
-      "integration_note": "Нет этой инфраструктуры. Отдельная packaging-задача после стабилизации backend. Feed owner/repo и binary ABI нельзя оставлять kotetsyy при переносе в новый продукт.",
-      "donor_decision": "Нет этой инфраструктуры. Отдельная packaging-задача после стабилизации backend. Feed owner/repo и binary ABI нельзя оставлять kotetsyy при переносе в новый продукт.",
+      "integration_note": "Absent from Savas. Separate packaging task after backend stabilization. Replace donor feed owner/repository and align all binary ABIs.",
+      "donor_decision": "Absent from Savas. Separate packaging task after backend stabilization. Replace donor feed owner/repository and align all binary ABIs.",
       "runtime_status": "live-code-path-inspected",
       "commits": []
     },
     {
       "id": "detached/K04",
       "source_map": "changes-detached.json",
-      "title": "**N-player membership/roster/incarnations**: Wire.h MAX_PLAYERS4/MAX_JOINS3, PKT_PLAYER_ROSTER49, SESSION_ACK51; `NetLink.cpp`, `NativeFrame.h`, `OwnRanks.h:51`; peer slot reuse и relay origin bound к текущей incarnation.",
+      "title": "**N-player membership/roster/incarnations**: Wire.h MAX_PLAYERS=4/MAX_JOINS=3, PKT_PLAYER_ROSTER=49, SESSION_ACK=51; NetLink.cpp, NativeFrame.h, OwnRanks.h:51. Peer-slot reuse and relay origin are bound to the current incarnation.",
       "phases": [
         "P1",
         "P8"
@@ -2108,15 +2108,15 @@
         "F04"
       ],
       "disposition": "manual-port/adapt",
-      "integration_note": "Частично: Savas уже N-player, owner validation, Steam roster/persistent squad ownership, но другой контракт. **Не заменять существующий Savas registry**. Извлекать membership fence/peer-retirement инварианты и тесты; сохранять единый PlayerId, campaign identity и отдельную connection incarnation.",
-      "donor_decision": "Частично: Savas уже N-player, owner validation, Steam roster/persistent squad ownership, но другой контракт. **Не заменять существующий Savas registry**. Извлекать membership fence/peer-retirement инварианты и тесты; сохранять единый PlayerId, campaign identity и отдельную connection incarnation.",
+      "integration_note": "Partial overlap: Savas already has N-player topology, owner validation and persistent Steam squad ownership, with a different contract. Keep one Savas-derived registry. Extract membership fences, peer-retirement invariants and tests; separate PlayerId/campaign identity from connection incarnation.",
+      "donor_decision": "Partial overlap: Savas already has N-player topology, owner validation and persistent Steam squad ownership, with a different contract. Keep one Savas-derived registry. Extract membership fences, peer-retirement invariants and tests; separate PlayerId/campaign identity from connection incarnation.",
       "runtime_status": "live-code-path-inspected",
       "commits": []
     },
     {
       "id": "detached/K05",
       "source_map": "changes-detached.json",
-      "title": "**World/load readiness barrier**: Wire PKT_WORLD_READY50 + LoadGo.worldToken + TimePacket.readyLoadId; `Plugin.cpp:267`, `1974`, `SaveXfer.cpp`; после native load ждёт procedural reconciliation/READY, а не просто успешного скачивания сейва.",
+      "title": "**World/load readiness barrier**: PKT_WORLD_READY=50, LoadGo.worldToken, TimePacket.readyLoadId; Plugin.cpp:267/1974 and SaveXfer.cpp. After native load, wait for procedural reconciliation/READY rather than just successful save download.",
       "phases": [
         "P2",
         "P5",
@@ -2126,15 +2126,15 @@
         "F05"
       ],
       "disposition": "manual-port/adapt",
-      "integration_note": "Есть bootstrap/save/load у Savas, но не этот worldToken+procedural-ready контракт. Портировать как центральный state machine, до любых новых world channels; одинаково для всех transport backends. Не завязывать correctness на включённость user-facing speed/time sync.",
-      "donor_decision": "Есть bootstrap/save/load у Savas, но не этот worldToken+procedural-ready контракт. Портировать как центральный state machine, до любых новых world channels; одинаково для всех transport backends. Не завязывать correctness на включённость user-facing speed/time sync.",
+      "integration_note": "Savas has bootstrap/save/load handling but not this worldToken/procedural-ready contract. Port a central state machine before new world channels, shared by every transport. Correctness must not depend on whether user-facing time/speed sync is enabled.",
+      "donor_decision": "Savas has bootstrap/save/load handling but not this worldToken/procedural-ready contract. Port a central state machine before new world channels, shared by every transport. Correctness must not depend on whether user-facing time/speed sync is enabled.",
       "runtime_status": "live-code-path-inspected",
       "commits": []
     },
     {
       "id": "detached/K06",
       "source_map": "changes-detached.json",
-      "title": "**Полные inventory snapshots с staging**: Wire.h:609 count u16, revision/offset/totalCount/digest, rows64/frame, total4096, parentIdx u16, grid section/x/y; `core/InventorySnapshotAssembler.h:58`, `InventorySnapshotRevision.h`; `Inbound.h` собирает полный снимок прежде чем отдаёт replicator.",
+      "title": "**Complete staged inventory snapshots**: Wire.h:609 uses u16 count, revision/offset/totalCount/digest, 64 rows/frame, 4096 total, u16 parentIdx and grid section/x/y. core/InventorySnapshotAssembler.h:58 and InventorySnapshotRevision.h; Inbound.h assembles a complete snapshot before handing it to the replicator.",
       "phases": [
         "P4"
       ],
@@ -2142,15 +2142,15 @@
         "F06"
       ],
       "disposition": "manual-port/adapt",
-      "integration_note": "Нет; Savas snapshot остаётся исходной формы/лимитов. Переносить единым codec+assembler+engine application изменением, включая bound validation, parent matching и новый handshake/schema. Нельзя поднять один count без downstream stack/buffer audit.",
-      "donor_decision": "Нет; Savas snapshot остаётся исходной формы/лимитов. Переносить единым codec+assembler+engine application изменением, включая bound validation, parent matching и новый handshake/schema. Нельзя поднять один count без downstream stack/buffer audit.",
+      "integration_note": "Absent from Savas, which retains the original snapshot shape/limits. Port codec, assembler and engine application together, including bounds, parent matching and handshake/schema. Raising only the count requires a downstream stack/buffer audit.",
+      "donor_decision": "Absent from Savas, which retains the original snapshot shape/limits. Port codec, assembler and engine application together, including bounds, parent matching and handshake/schema. Raising only the count requires a downstream stack/buffer audit.",
       "runtime_status": "live-code-path-inspected",
       "commits": []
     },
     {
       "id": "detached/K07",
       "source_map": "changes-detached.json",
-      "title": "**Host-authoritative native shop / extraction transactions**: `game/InventoryTransactionBridge.h`, `InventoryTransactionRules.h`; `ReplicatorItems.cpp:1906` собирает NativeShopIntent, `commitNativeShopTransaction` исполняет HOST, sourceRevision/actorRevision, replay conflict, quote ceiling/floor, checkpoint+ACK.",
+      "title": "**Host-authoritative native shop/extraction transactions**: game/InventoryTransactionBridge.h and InventoryTransactionRules.h; ReplicatorItems.cpp:1906 builds NativeShopIntent. Host commitNativeShopTransaction checks sourceRevision/actorRevision, replay conflicts, quote ceiling/floor and checkpoint/ACK.",
       "phases": [
         "P4",
         "P5"
@@ -2160,15 +2160,15 @@
         "F08"
       ],
       "disposition": "semantic-merge-single-transaction-coordinator",
-      "integration_note": "Одна ответственность с SAV-TRADER/P05/B03; новый общий coordinator, не параллельные handlers.",
-      "donor_decision": "Savas65 имеет **альтернативную** merchant window lock + touched-line absolute-count handover (`TradeHeader`, ReplicatorItems::sendTradeOp/tickTrade), не то же решение. Выбрать единый transaction coordinator. Нельзя запускать оба native hooks и оба handlers: они дважды учтут предмет/дебет. Вначале спроектировать canonical transaction ID, item identity, payer policy, outcome journal; потом перенести tests/pure policies.",
+      "integration_note": "Same responsibility as SAV-TRADER/P05/B03; design one coordinator instead of parallel handlers.",
+      "donor_decision": "Alternative to Savas65 merchant-window lock and absolute touched-line handover (TradeHeader, sendTradeOp/tickTrade). Select one transaction coordinator. Two sets of native hooks/handlers could count the same item/debit twice. Define transaction ID, item identity, payer policy and outcome journal before extracting tests/pure policies.",
       "runtime_status": "live-code-path-inspected",
       "commits": []
     },
     {
       "id": "detached/K08",
       "source_map": "changes-detached.json",
-      "title": "**Inventory/cursor lifetime и conservation**: `EngineInventory.cpp`, `EngineInternal.cpp`, `ReplicatorItems.cpp`; `InventorySnapshotRevision::accept` одноразово применяет committed state к own pocket; actor checkpoint equivalent сравнивает quantities/parents, игнорирует incidental grid packing.",
+      "title": "**Inventory/cursor lifetime and conservation**: EngineInventory.cpp, EngineInternal.cpp, ReplicatorItems.cpp. InventorySnapshotRevision::accept applies committed state once to an owned pocket; checkpoint equivalence compares quantities/parents while ignoring incidental grid packing.",
       "phases": [
         "P4"
       ],
@@ -2177,15 +2177,15 @@
         "F07"
       ],
       "disposition": "manual-port/adapt",
-      "integration_note": "Частично: Savas имеет свои inventory transfer/save/native item fixes, но этих staged checkpoint policies нет. Хороший ранний кандидат после minimal reproduction на Savas. Портировать отдельный инвариант и regression, не целый файл на2500+ changed lines.",
-      "donor_decision": "Частично: Savas имеет свои inventory transfer/save/native item fixes, но этих staged checkpoint policies нет. Хороший ранний кандидат после minimal reproduction на Savas. Портировать отдельный инвариант и regression, не целый файл на2500+ changed lines.",
+      "integration_note": "Partial overlap: Savas has inventory transfer/save/native-item fixes but not these staged checkpoint policies. Port individual invariants with a reproduction on Savas instead of replacing an entire file with more than 2500 changed lines.",
+      "donor_decision": "Partial overlap: Savas has inventory transfer/save/native-item fixes but not these staged checkpoint policies. Port individual invariants with a reproduction on Savas instead of replacing an entire file with more than 2500 changed lines.",
       "runtime_status": "live-code-path-inspected",
       "commits": []
     },
     {
       "id": "detached/K09",
       "source_map": "changes-detached.json",
-      "title": "**Host-версионированные замки/двери**: `sync/LockAuthority.h:6`, `ReplicatorChannels.cpp:923` publishDoors/applyDoors; peer requests не двигают durable clock, parentHand+doorIndex в DoorPacket, сохраняется authoritative lock после convergence/unload.",
+      "title": "**Host-versioned locks/doors**: sync/LockAuthority.h:6, ReplicatorChannels.cpp:923 publishDoors/applyDoors. Peer requests do not advance the durable clock; DoorPacket has parentHand/doorIndex. Authoritative lock survives convergence/unload.",
       "phases": [
         "P6"
       ],
@@ -2193,15 +2193,15 @@
         "F12"
       ],
       "disposition": "manual-port/adapt",
-      "integration_note": "Есть door/lock sync, но не этот authority/revision слой. Извлечь pure admission и adapter; требуется общий fixture identity (с учётом Ximery identity fixes). Обязательны lockpick обеих сторон, stale replay/rejoin, parentless placed door.",
-      "donor_decision": "Есть door/lock sync, но не этот authority/revision слой. Извлечь pure admission и adapter; требуется общий fixture identity (с учётом Ximery identity fixes). Обязательны lockpick обеих сторон, stale replay/rejoin, parentless placed door.",
+      "integration_note": "Savas has door/lock sync without this authority/revision layer. Extract pure admission policy and an adapter. Requires shared fixture identity, including Ximery-related identity fixes. Test both players lockpicking, stale replay/rejoin and parentless placed doors.",
+      "donor_decision": "Savas has door/lock sync without this authority/revision layer. Extract pure admission policy and an adapter. Requires shared fixture identity, including Ximery-related identity fixes. Test both players lockpicking, stale replay/rejoin and parentless placed doors.",
       "runtime_status": "live-code-path-inspected",
       "commits": []
     },
     {
       "id": "detached/K10",
       "source_map": "changes-detached.json",
-      "title": "**Carried body drop/landing pose и bed retention**: EventPacket poseValid+x/y/z/heading, DROP_ARG_LANDING; `ReplicatorDrive.cpp:213`, `EngineSpawnCombat.cpp`, `EngineInternal.cpp`, `applyFurniture` handling; для отсутствующей fixture допускается guarded materialization только у accepted actor.",
+      "title": "**Carried-body drop/landing pose and bed retention**: EventPacket poseValid/x/y/z/heading, DROP_ARG_LANDING; ReplicatorDrive.cpp:213, EngineSpawnCombat.cpp, EngineInternal.cpp, applyFurniture. Missing fixtures allow guarded materialization only for an accepted actor.",
       "phases": [
         "P6",
         "P7"
@@ -2212,15 +2212,15 @@
         "F15"
       ],
       "disposition": "manual-port/adapt",
-      "integration_note": "Savas58.1 тоже содержит carry/bed/NPC corrections, однако другой код и wire. Семантический overlap: сначала сравнить конкретный repro; объединять исправления по симптомам, не по похожим именам. Fixture materialization требует доказательства provenance/conservation.",
-      "donor_decision": "Savas58.1 тоже содержит carry/bed/NPC corrections, однако другой код и wire. Семантический overlap: сначала сравнить конкретный repro; объединять исправления по симптомам, не по похожим именам. Fixture materialization требует доказательства provenance/conservation.",
+      "integration_note": "Savas58.1 also fixes carry/bed/NPC behavior, using different code and wire. Deduplicate using concrete reproductions. Fixture materialization requires proven provenance/conservation.",
+      "donor_decision": "Savas58.1 also fixes carry/bed/NPC behavior, using different code and wire. Deduplicate using concrete reproductions. Fixture materialization requires proven provenance/conservation.",
       "runtime_status": "live-code-path-inspected",
       "commits": []
     },
     {
       "id": "detached/K11",
       "source_map": "changes-detached.json",
-      "title": "**Процедурные camp-bed регионы**: `EngineProcedural.cpp`, `ProceduralWorldSync.cpp`, `core/ProceduralWorldState.h`; BEGIN/ROW/END/ACK/RETIRE/SCOPE_COMMIT, world/load/region/epoch/digest, quantized descriptors, complete native census fence. Подключено в Plugin, категория строго PROC_CATEGORY_CAMP_BED.",
+      "title": "**Procedural camp-bed regions**: EngineProcedural.cpp, ProceduralWorldSync.cpp, core/ProceduralWorldState.h; BEGIN/ROW/END/ACK/RETIRE/SCOPE_COMMIT, world/load/region/epoch/digest, quantized descriptors and complete-native-census fence. Wired into Plugin, strictly limited to PROC_CATEGORY_CAMP_BED.",
       "phases": [
         "P6"
       ],
@@ -2228,15 +2228,15 @@
         "F13"
       ],
       "disposition": "manual-port/adapt",
-      "integration_note": "Нет. Поздний optional world channel; readiness lifecycle зависит от K05 и canonical fixture IDs. Это не универсальный sync всех процедурных объектов.",
-      "donor_decision": "Нет. Поздний optional world channel; readiness lifecycle зависит от K05 и canonical fixture IDs. Это не универсальный sync всех процедурных объектов.",
+      "integration_note": "Absent from Savas. Later optional world channel. Readiness depends on K05 and canonical fixture IDs. This is not universal synchronization of procedural objects.",
+      "donor_decision": "Absent from Savas. Later optional world channel. Readiness depends on K05 and canonical fixture IDs. This is not universal synchronization of procedural objects.",
       "runtime_status": "live-code-path-inspected",
       "commits": []
     },
     {
       "id": "detached/K12",
       "source_map": "changes-detached.json",
-      "title": "**EnvironmentItemsSync — эксперимент, выключен в public**: `Plugin.cpp:76` возвращает false вне HARNESS; Harness требует KENSHICOOP_ENVIRONMENT_ITEMS=1. Реальная реализация `EnvironmentItemsSync.cpp`, `EngineEnvironmentItems.cpp`, EnvironmentItemsState/EnvironmentItemPacket.",
+      "title": "**EnvironmentItemsSync is experimental and disabled in public Release**: Plugin.cpp:76 returns false outside HARNESS; Harness also requires KENSHICOOP_ENVIRONMENT_ITEMS=1. Implemented by EnvironmentItemsSync.cpp, EngineEnvironmentItems.cpp, EnvironmentItemsState/EnvironmentItemPacket.",
       "phases": [
         "P6",
         "P11"
@@ -2246,15 +2246,15 @@
         "F10"
       ],
       "disposition": "experimental-disabled-until-gates",
-      "integration_note": "Эксперимент отключён в public; сохранить с отдельным gate и tests.",
-      "donor_decision": "Нет. Сохранить как экспериментальный feature flag/исходники и тесты; не включать публично по факту наличия кода.",
+      "integration_note": "Disabled in public Release; preserve as an experiment with explicit gates and tests.",
+      "donor_decision": "Absent from Savas. Preserve behind an experimental flag with tests; code presence does not justify public enablement.",
       "runtime_status": "experimental-disabled-in-public",
       "commits": []
     },
     {
       "id": "detached/K13",
       "source_map": "changes-detached.json",
-      "title": "**Иные money/speed policies**: `ReplicatorChannels.cpp:712,808` broadcast Money.ackSeq0 и guests adopt total; pending-reapply убран. `SpeedAdmission.h` принимает SPEED_COMMAND, latest host-sequenced real action, не старые heartbeat votes; cap combat убран в этой ветви.",
+      "title": "**Alternative money/speed policies**: ReplicatorChannels.cpp:712/808 broadcasts Money.ackSeq=0; guests adopt total and pending reapply is removed. SpeedAdmission.h accepts SPEED_COMMAND, using the latest host-sequenced real action rather than heartbeat votes; combat cap was removed.",
       "phases": [
         "P8"
       ],
@@ -2262,15 +2262,15 @@
         "F21"
       ],
       "disposition": "optional-speed-policy; preserve-base-money-ACK",
-      "integration_note": "Скорость — optional policy; money ack0 не заменяет Savas per-owner ACK.",
-      "donor_decision": "Конфликт: Savas shared pool с per-ownerACK и pending reconciliation; speed consensus. Для shared economy **предпочесть строгий per-ownerACK Savas**, а не упрощать до ack0. Скорость оформить выбранным campaign policy; сохранить оба UX режима, один active handler.",
+      "integration_note": "Speed is an optional policy; money ack0 must not replace Savas per-owner ACK.",
+      "donor_decision": "Conflicts with Savas shared-pool per-owner ACK/pending reconciliation and speed consensus. Keep strict Savas per-owner ACK for shared money. Make speed arbitration an explicit campaign policy with one active handler.",
       "runtime_status": "live-code-path-inspected",
       "commits": []
     },
     {
       "id": "detached/V01",
       "source_map": "changes-detached.json",
-      "title": "**Публичный Steam server browser**: `net/SteamInvite.cpp:350` refreshServerRow/onLobbyMatchList; dynamic optional RequestLobbyList/GetLobbyByIndex/AddRequestLobbyListStringFilter, фильтр `kc_game=KenshiCoop`, name/players/password/compatible, до16 строк; `browseServers`, `joinServer`, `hostPublicServer` создаёт **2-player public lobby**.",
+      "title": "**Public Steam server browser**: net/SteamInvite.cpp:350 refreshServerRow/onLobbyMatchList; optional RequestLobbyList/GetLobbyByIndex/AddRequestLobbyListStringFilter, kc_game=KenshiCoop filter, name/players/password/compatibility, up to 16 rows. browseServers/joinServer/hostPublicServer create a two-player public lobby.",
       "phases": [
         "P9"
       ],
@@ -2278,15 +2278,15 @@
         "F18"
       ],
       "disposition": "manual-port/adapt",
-      "integration_note": "Savas есть Steam friend lobby/invites, но browser functions/metadata этого форка отсутствуют. Портировать как discovery provider к Session API Savas, заменить hard-coded2 на единый session limit, фильтровать schema/version/capabilities.",
-      "donor_decision": "Savas есть Steam friend lobby/invites, но browser functions/metadata этого форка отсутствуют. Портировать как discovery provider к Session API Savas, заменить hard-coded2 на единый session limit, фильтровать schema/version/capabilities.",
+      "integration_note": "Savas has friend lobbies/invites but lacks these browser functions/metadata. Port discovery to its Session API, replace the hard-coded two-player limit and filter schema/version/capabilities.",
+      "donor_decision": "Savas has friend lobbies/invites but lacks these browser functions/metadata. Port discovery to its Session API, replace the hard-coded two-player limit and filter schema/version/capabilities.",
       "runtime_status": "live-code-path-inspected",
       "commits": []
     },
     {
       "id": "detached/V02",
       "source_map": "changes-detached.json",
-      "title": "**F10 MULTIPLAYER panel + сохранение LAN settings**: `game/MultiplayerUi.cpp` (789строк), `MultiplayerUi.h`, Plugin.cpp подключение; `core/Config.cpp` serverName/password/LAN values; исходная F2 сохраняется.",
+      "title": "**F10 MULTIPLAYER panel and persistent LAN settings**: game/MultiplayerUi.cpp (789 lines), MultiplayerUi.h and Plugin wiring; core/Config.cpp stores serverName/password/LAN values. Original F2 remains.",
       "phases": [
         "P9"
       ],
@@ -2294,15 +2294,15 @@
         "F19"
       ],
       "disposition": "manual-port/adapt",
-      "integration_note": "Альтернативный UX к Savas/KotetsUI. Переносить browser/password controls в выбранную общую UI, не второй independent connect owner.",
-      "donor_decision": "Альтернативный UX к Savas/KotetsUI. Переносить browser/password controls в выбранную общую UI, не второй independent connect owner.",
+      "integration_note": "Alternative UI to Savas/Kotets. Move browser/password controls into the selected UI, not a second independent connection owner.",
+      "donor_decision": "Alternative UI to Savas/Kotets. Move browser/password controls into the selected UI, not a second independent connection owner.",
       "runtime_status": "live-code-path-inspected",
       "commits": []
     },
     {
       "id": "detached/V03",
       "source_map": "changes-detached.json",
-      "title": "**Handshake refusal + password gate**: `Wire.h` protocol57, Hello.pwHash, PKT_AUTH_FAIL250, AuthFailPacket.reason/peerVersion; `passwordHash64` — **несолёный FNV-1a64**, не криптографическая authentication. `NetLink.cpp` посылает reliable отказ, flush/disconnect_later, latch authFailed останавливает reconnect; CONNECT сбрасывает latch.",
+      "title": "**Handshake refusal and password gate**: Wire.h protocol 57, Hello.pwHash, PKT_AUTH_FAIL=250, AuthFailPacket.reason/peerVersion. passwordHash64 is unsalted FNV-1a64, not cryptographic authentication. NetLink.cpp sends reliable refusal, flush/disconnect_later; authFailed latches stop reconnect and CONNECT clears the latch.",
       "phases": [
         "P1",
         "P9"
@@ -2311,15 +2311,15 @@
         "F18"
       ],
       "disposition": "refusal-port; auth-design-replacement",
-      "integration_note": "Сохранить refusal/latch; FNV password gate требует нового authentication contract.",
-      "donor_decision": "Refusal reason/latch полезны отдельно от password design. Нельзя переносить FNV как защиту публичного сервера: это replayable bearer-equivalent hash. Нужен отдельный согласованный auth contract (challenge/nonce либо проверяемый transport identity), а тексты wrong password/version — общий error model.",
+      "integration_note": "Preserve refusal/latch behavior; replace the FNV password gate with a defined authentication contract.",
+      "donor_decision": "Refusal reasons/latches are useful separately from password design. Do not reuse FNV as public-server protection: the hash is replayable bearer-equivalent data. Define authentication through a reviewed challenge/nonce or authenticated transport identity, and use one error model for password/version failures.",
       "runtime_status": "live-code-path-inspected",
       "commits": []
     },
     {
       "id": "detached/P01",
       "source_map": "changes-detached.json",
-      "title": "**Persistent anonymous player slots0..8**: `netproto/SessionSlots.h::assign/restore` максимум8 guest bindings; Hello.clientTokenLo/Hi, Welcome.privateWorld*; `core/Config.cpp:110` coop_user.dat, `net/NetLink.cpp:698,758`; `sync/PlayerSlotSession.h` checksummed KCOOP_PLAYERS_1 sidecar `coop_players.dat`. Слоты сохраняются для offline players.",
+      "title": "**Persistent anonymous slots 0–8**: netproto/SessionSlots.h::assign/restore supports eight guest bindings; Hello.clientTokenLo/Hi and Welcome.privateWorld*. core/Config.cpp:110 uses coop_user.dat, NetLink.cpp:698/758; sync/PlayerSlotSession.h stores checksummed KCOOP_PLAYERS_1 coop_players.dat. Offline players retain slots.",
       "phases": [
         "P1",
         "P8"
@@ -2328,15 +2328,15 @@
         "F04"
       ],
       "disposition": "manual-port/adapt",
-      "integration_note": "Альтернатива Savas SteamId→rank, а не дополнительная map поверх него. Нужен единый logical PlayerIdentity (Steam/user token transports отдельно) и explicit reassignment/import; неизвестный новый гость не должен наследовать чужие кошелёк/репутацию автоматически. Token не является сильным authentication доказательством.",
-      "donor_decision": "Альтернатива Savas SteamId→rank, а не дополнительная map поверх него. Нужен единый logical PlayerIdentity (Steam/user token transports отдельно) и explicit reassignment/import; неизвестный новый гость не должен наследовать чужие кошелёк/репутацию автоматически. Token не является сильным authentication доказательством.",
+      "integration_note": "Alternative to Savas SteamId-to-rank mapping. Define one logical PlayerIdentity with transport-specific Steam/token identities and explicit reassignment/import. A new guest must not silently inherit another player’s wallet/reputation. The token is not strong authentication.",
+      "donor_decision": "Alternative to Savas SteamId-to-rank mapping. Define one logical PlayerIdentity with transport-specific Steam/token identities and explicit reassignment/import. A new guest must not silently inherit another player’s wallet/reputation. The token is not strong authentication.",
       "runtime_status": "live-code-path-inspected",
       "commits": []
     },
     {
       "id": "detached/P02",
       "source_map": "changes-detached.json",
-      "title": "**Private squad ownership + UI enforcement + recruitment routing**: `PrivateSquadSession::capture/restoreForSlot` checksummed KCSQ002 `coop_squads.dat`, durable per-body ownerSlot; `PrivateSquadUi.h` фильтрует native tabs/management, peer inspect не добавляет в selectedCharacters; `PrivateRecruit.h`, `ReplicatorSpawn.cpp`, `EngineWorld.cpp` route recruit и rekey; `GuestRosterPlan.h`/GuestRosterSession создают missing logical guest bodies на host, ограничивают retries, ждут durable pin.",
+      "title": "**Private squad ownership, UI enforcement and recruit routing**: PrivateSquadSession::capture/restoreForSlot stores checksummed KCSQ002 coop_squads.dat with durable per-body ownerSlot. PrivateSquadUi.h filters tabs/management and peer inspection does not add selectedCharacters. PrivateRecruit.h, ReplicatorSpawn.cpp and EngineWorld.cpp route recruits/rekeys. GuestRosterPlan/Session create missing logical guest bodies on host, bound retries and wait for durable pinning.",
       "phases": [
         "P8"
       ],
@@ -2345,15 +2345,15 @@
         "F19"
       ],
       "disposition": "manual-port/adapt",
-      "integration_note": "Savas уже persistent squad assignment, но управление через свой registry и общую native faction. Портировать policy/ownership validation, не дублировать body pins. Приватные UI tabs и inspect restrictions optional presentation policy.",
-      "donor_decision": "Savas уже persistent squad assignment, но управление через свой registry и общую native faction. Портировать policy/ownership validation, не дублировать body pins. Приватные UI tabs и inspect restrictions optional presentation policy.",
+      "integration_note": "Savas already persists squad assignment using its registry and shared native faction. Port ownership policy/validation without duplicating body pins. Private-tab presentation and inspect restrictions are optional policies.",
+      "donor_decision": "Savas already persists squad assignment using its registry and shared native faction. Port ownership policy/validation without duplicating body pins. Private-tab presentation and inspect restrictions are optional policies.",
       "runtime_status": "live-code-path-inspected",
       "commits": []
     },
     {
       "id": "detached/P03",
       "source_map": "changes-detached.json",
-      "title": "**Раздельные кошельки с durable cut**: `SeparateWallet.h`/`SeparateWalletSession.h::tick,setBalance,vendorBegin,vendorFinish,readyForSave`; balance per slot, epoch+exact-next sequences, reconnect replay и pending ACK, новый guest native wallet0 до snapshot; `coop_wallets.dat` в coordinated save, сохранение временным файлом+FlushFileBuffers+MoveFileEx. Plugin.privateWalletMode выключает Replicator shared money sampler.",
+      "title": "**Separate wallets with a durable checkpoint**: SeparateWallet/SeparateWalletSession::{tick,setBalance,vendorBegin,vendorFinish,readyForSave}; per-slot balance, epoch/exact-next sequence, reconnect replay and pending ACK. A new guest has native wallet zero until snapshot. coop_wallets.dat joins the coordinated save; temp-file, FlushFileBuffers and MoveFileEx commit. Plugin.privateWalletMode disables shared-money sampling.",
       "phases": [
         "P8"
       ],
@@ -2361,15 +2361,15 @@
         "F21"
       ],
       "disposition": "optional-campaign-economy-policy",
-      "integration_note": "Optional private economy policy, manifest и migration; shared handler в этом режиме выключен.",
-      "donor_decision": "**Прямой конфликт shared wallet Savas/Kotets/nhoral**. Ввести EconomyPolicy shared/private, выбрать до создания кампании и хранить в manifest; миграция требует явного allocation rule. Native vendor debit должен вызывать единственный Economy service.",
+      "integration_note": "Optional private-economy policy with manifest/migration; disable the shared handler in this mode.",
+      "donor_decision": "Direct conflict with Savas/Kotets/nhoral shared money. Select EconomyPolicy shared/private before campaign creation and persist it in a manifest. Migration needs an explicit allocation rule. Native vendor debits must call one Economy service.",
       "runtime_status": "live-code-path-inspected",
       "commits": []
     },
     {
       "id": "detached/P04",
       "source_map": "changes-detached.json",
-      "title": "**Personal faction relations/crime consequences**: `PrivateFactionNative.h` hooks, `PrivateFactionLedger/Session/Snapshot`, `netproto/PrivateFactionWire.h` и pending causes; owner/direction/sequence, world nonce/load fence/READY, host authoritative legal cause→owner row+ACK, `coop_factions.dat`. Plugin.cpp:2665 включает по умолчанию в private squads non-scenario mode.",
+      "title": "**Personal faction relations/crime consequences**: PrivateFactionNative hooks and PrivateFactionLedger/Session/Snapshot, netproto/PrivateFactionWire.h and pending causes. Owner/direction/sequence, world nonce/load fence/READY, host-authoritative legal cause→owner row/ACK, coop_factions.dat. Plugin.cpp:2665 enables this by default for private squads outside scenarios.",
       "phases": [
         "P8"
       ],
@@ -2377,15 +2377,15 @@
         "F21"
       ],
       "disposition": "optional-campaign-faction-policy",
-      "integration_note": "Optional private faction policy с единственным native event writer и durable migration.",
-      "donor_decision": "У Savas общие faction/bounty sync corrections, но не personal relationship histories. Большой optional gameplay mode, нужен authoritative event owner и persistence migration; смешивание двух faction hooks даст двойные последствия.",
+      "integration_note": "Optional private-faction policy with one native event writer and durable migration.",
+      "donor_decision": "Savas has shared faction/bounty corrections but no personal relationship history. Large optional gameplay policy requiring authoritative event ownership and persistence migration. Two faction-hook paths would apply consequences twice.",
       "runtime_status": "live-code-path-inspected",
       "commits": []
     },
     {
       "id": "detached/P05",
       "source_map": "changes-detached.json",
-      "title": "**Vendor64/65/66 atomic trade coordinator**: `VendorCoordinator64.h`, `VendorLedger64.h`, `VendorTypes64.h`, `VendorProtocol64.h`; lease/grant/state/ack/release/busy, complete chunked stock records+cash+walletBefore/After/seq+actor inventoryHash/world/generation/revision. `EngineVendor64.inl::installVendorHooks64` hooks ShopTrader ctor/dtor, RClickAutoTrade, place/pickup mouse item, ActivePlatoon::refreshInventory. Restock schedule66 и exact native inventory ACK завершают cut; `coop_vendors.dat`. Plugin.cpp:2148 требует **native hooks + separateMoney** для этой торговли.",
+      "title": "**Vendor64/65/66 atomic trade coordinator**: VendorCoordinator64/Ledger64/Types64/Protocol64; lease/grant/state/ack/release/busy, complete chunked stock plus cash, walletBefore/After/seq and actor inventoryHash/world/generation/revision. EngineVendor64.inl::installVendorHooks64 hooks ShopTrader ctor/dtor, RClickAutoTrade, mouse pickup/placement and ActivePlatoon::refreshInventory. Restock schedule66 and exact native-inventory ACK complete the checkpoint; coop_vendors.dat. Plugin.cpp:2148 requires native hooks and separateMoney.",
       "phases": [
         "P5",
         "P8"
@@ -2394,15 +2394,15 @@
         "F08"
       ],
       "disposition": "semantic-merge-single-transaction-coordinator",
-      "integration_note": "Перенести atomic stock/wallet invariants в общий coordinator; в доноре зависит от separateMoney/native hooks.",
-      "donor_decision": "Конкурирует с Savas65 touched-line handover и Kotets host native transaction replay. Это **три реализации одной ответственности**. Не переносить совместно. Сначала единый merchant/stock identity, transaction journal и Economy API; адаптировать полезные complete-stock/wallet atomicity/restock invariants, отдельно доказать price/authorship.",
+      "integration_note": "Adapt atomic stock/wallet invariants to the shared coordinator; donor requires separateMoney/native hooks.",
+      "donor_decision": "Competes with Savas65 touched-line handover and Kotets host-native transactions: three implementations of one responsibility. Define one merchant/stock identity, transaction journal and Economy API. Adapt complete-stock/wallet atomicity/restock invariants and separately establish pricing/authorship; do not activate all three coordinators.",
       "runtime_status": "live-code-path-inspected",
       "commits": []
     },
     {
       "id": "detached/P06",
       "source_map": "changes-detached.json",
-      "title": "**Item charges/uniqueness/theft ownership + точный inventory convergence**: Wire.InvItemEntry chargesRemaining/nativeUnique/properOwner[5]; `ItemCharges.h`, `EngineInventory.cpp:534::reconcileChargedItems`, `planItemCharges`, `sameInventoryMetadata64`, `captureContainerDigest64`. Код сначала reuse/equip существующие native items, освобождает grid space, затем creates additions; failure удаляет только created items, rollback moves/qty/charges. Фикс .5.3.1 действительно присутствует.",
+      "title": "**Item charges, uniqueness, theft ownership and exact inventory convergence**: InvItemEntry adds chargesRemaining/nativeUnique/properOwner[5]. ItemCharges.h, EngineInventory.cpp:534::reconcileChargedItems, planItemCharges, sameInventoryMetadata64, captureContainerDigest64. Reuse/equip native items first, free grid space, then create additions. Failure removes only newly created items and rolls back moves/quantity/charges. The .5.3.1 fix is present in source.",
       "phases": [
         "P4"
       ],
@@ -2410,15 +2410,15 @@
         "F09"
       ],
       "disposition": "manual-port/adapt",
-      "integration_note": "Savas не имеет этих wire fields/charge reconcile. Полезный независимый доменный порт, но item identity/hash/equality должны включать новые поля везде (snapshot, transfers, vendor, save, tests). Согласовать с Kotets grid/parent4096 и не копировать фиксированные64 scratch arrays без изменения лимитов.",
-      "donor_decision": "Savas не имеет этих wire fields/charge reconcile. Полезный независимый доменный порт, но item identity/hash/equality должны включать новые поля везде (snapshot, transfers, vendor, save, tests). Согласовать с Kotets grid/parent4096 и не копировать фиксированные64 scratch arrays без изменения лимитов.",
+      "integration_note": "Savas lacks these wire fields/charge reconciliation. Port item identity/hash/equality consistently across snapshots, transfers, vendors, saves and tests. Coordinate with Kotets 4096-item/grid/parent support; do not copy fixed 64-entry scratch arrays without auditing limits.",
+      "donor_decision": "Savas lacks these wire fields/charge reconciliation. Port item identity/hash/equality consistently across snapshots, transfers, vendors, saves and tests. Coordinate with Kotets 4096-item/grid/parent support; do not copy fixed 64-entry scratch arrays without auditing limits.",
       "runtime_status": "live-code-path-inspected",
       "commits": []
     },
     {
       "id": "detached/P07",
       "source_map": "changes-detached.json",
-      "title": "**Медицинские signed levels**: `MedicalWire.h`, TreatmentPacket.partMask+partBand[]; engine treatment apply использует mask, а не sentinel «-1 значит не применить».",
+      "title": "**Signed medical levels**: MedicalWire.h and TreatmentPacket.partMask/partBand[]. Engine treatment applies a mask instead of treating -1 as a “do not apply” sentinel.",
       "phases": [
         "P7"
       ],
@@ -2426,15 +2426,15 @@
         "F14"
       ],
       "disposition": "manual-port/adapt",
-      "integration_note": "Нет такой структуры в Savas65. Узкий кандидат, но wire bump; тесты negative valid level, mask bound, partial limbs, NaN, повтор treatment.",
-      "donor_decision": "Нет такой структуры в Savas65. Узкий кандидат, но wire bump; тесты negative valid level, mask bound, partial limbs, NaN, повтор treatment.",
+      "integration_note": "Savas65 lacks this structure. A narrow port requiring a wire change; test legitimate negative levels, mask bounds, partial limbs, NaN and repeated treatment.",
+      "donor_decision": "Savas65 lacks this structure. A narrow port requiring a wire change; test legitimate negative levels, mask bounds, partial limbs, NaN and repeated treatment.",
       "runtime_status": "live-code-path-inspected",
       "commits": []
     },
     {
       "id": "detached/P08",
       "source_map": "changes-detached.json",
-      "title": "**Host relay policy + chat/display names**: `PacketRoute.h` hostOnly/guestRequestOnly/senderMatches/validRelay, строгие len/bounds/medical validations; ChatPacket49, PlayerName50 и `ChatText.h`; NetLink relay не должен принимать ложный ownerId или blindly forward authority messages. Имена независимы от Steam.",
+      "title": "**Host relay policy, chat and display names**: PacketRoute.h hostOnly/guestRequestOnly/senderMatches/validRelay, strict length/bounds/medical validation; ChatPacket=49, PlayerName=50 and ChatText.h. NetLink rejects forged ownerId and must not blindly forward authority messages. Names are independent of Steam.",
       "phases": [
         "P1",
         "P9"
@@ -2444,15 +2444,15 @@
         "F19"
       ],
       "disposition": "manual-port/adapt",
-      "integration_note": "Savas уже имеет свой N-player relay/authorship model, но строгий policy seam — полезная спецификация и negative-test source. Сохранить один registry/owner lookup, не внедрять второй route table со старым enum.",
-      "donor_decision": "Savas уже имеет свой N-player relay/authorship model, но строгий policy seam — полезная спецификация и negative-test source. Сохранить один registry/owner lookup, не внедрять второй route table со старым enum.",
+      "integration_note": "Savas has its own N-player relay/authorship model. Reuse the policy boundary as a specification and negative-test source; keep one registry/owner lookup rather than adding a second routing table with an old enum.",
+      "donor_decision": "Savas has its own N-player relay/authorship model. Reuse the policy boundary as a specification and negative-test source; keep one registry/owner lookup rather than adding a second routing table with an old enum.",
       "runtime_status": "live-code-path-inspected",
       "commits": []
     },
     {
       "id": "detached/P09",
       "source_map": "changes-detached.json",
-      "title": "**Last-action speed intent**: `SharedSpeed.h::receive` принимает SPEED_USER_INTENT, telemetry не перезаписывает последнее реальное действие; optional combat cap через effective(combat,cap).",
+      "title": "**Last-action speed intent**: SharedSpeed.h::receive accepts SPEED_USER_INTENT; telemetry cannot overwrite the last real action. Optional combat cap through effective(combat,cap).",
       "phases": [
         "P8"
       ],
@@ -2460,15 +2460,15 @@
         "F21"
       ],
       "disposition": "optional-campaign-speed-policy",
-      "integration_note": "Optional last-action speed policy; не запускать вместе с min-vote handler.",
-      "donor_decision": "Альтернативно Savas min-vote consensus. Один выбранный SpeedPolicy, одинаковая сериализация user intent/heartbeat. Не комбинировать min-vote и last-action handlers.",
+      "integration_note": "Optional last-action speed policy; do not run alongside a minimum-vote handler.",
+      "donor_decision": "Alternative to Savas minimum-vote consensus. Select one SpeedPolicy with consistent user-intent/heartbeat serialization. Do not run minimum-vote and last-action handlers together.",
       "runtime_status": "live-code-path-inspected",
       "commits": []
     },
     {
       "id": "detached/P10",
       "source_map": "changes-detached.json",
-      "title": "**Coordinated persistence fences**: Plugin.before-save guard, player/squad/wallet/faction/vendor frozen snapshots; `SaveXfer.cpp` переносит sidecars вместе с native world/fingerprint и не публикует неконсистентный cut. Save блокируется при unacked vendor/faction/money.",
+      "title": "**Coordinated persistence fences**: Plugin before-save guard freezes player/squad/wallet/faction/vendor snapshots. SaveXfer.cpp transfers sidecars with the native world/fingerprint and avoids publishing an inconsistent checkpoint. Unacknowledged vendor/faction/money operations block saving.",
       "phases": [
         "P5",
         "P8"
@@ -2477,15 +2477,15 @@
         "F05"
       ],
       "disposition": "manual-port/adapt",
-      "integration_note": "У Savas есть save safety fixes, но этого набора sidecars/atomic domain capture нет. Взять explicit PrepareSave/Capture/Commit service с all-or-nothing manifest. Нельзя переносить только отдельный .dat без lifecycle hooks/rollback и fingerprint coverage.",
-      "donor_decision": "У Savas есть save safety fixes, но этого набора sidecars/atomic domain capture нет. Взять explicit PrepareSave/Capture/Commit service с all-or-nothing manifest. Нельзя переносить только отдельный .dat без lifecycle hooks/rollback и fingerprint coverage.",
+      "integration_note": "Savas has save-safety fixes but not this sidecar/domain-atomic capture. Define PrepareSave/Capture/Commit with an all-or-nothing manifest. A .dat file alone is insufficient without lifecycle hooks, rollback and fingerprint coverage.",
+      "donor_decision": "Savas has save-safety fixes but not this sidecar/domain-atomic capture. Define PrepareSave/Capture/Commit with an all-or-nothing manifest. A .dat file alone is insufficient without lifecycle hooks, rollback and fingerprint coverage.",
       "runtime_status": "live-code-path-inspected",
       "commits": []
     },
     {
       "id": "detached/P11",
       "source_map": "changes-detached.json",
-      "title": "**Canonical identity/protocol-next foundation НЕ live**: `CanonicalWire.h:1`, `CanonicalControl.h`, `CanonicalRekey.h`, `RuntimeIdentity*.h`, `CanonicalTransport.h:1` прямо «Not installed in NetLink»; нет использования Adapter в live NetLink.",
+      "title": "**Canonical identity/protocol-next foundation is not live**: CanonicalWire.h:1, CanonicalControl.h, CanonicalRekey.h, RuntimeIdentity*.h and CanonicalTransport.h:1 explicitly state “Not installed in NetLink”; live NetLink does not use the Adapter.",
       "phases": [
         "P1",
         "P3",
@@ -2496,8 +2496,8 @@
         "F03"
       ],
       "disposition": "prototype-reference-and-tests; not-live",
-      "integration_note": "Prototype-not-live; design/tests учитывать, готовой live identity replacement не считать.",
-      "donor_decision": "Не считать устранением всех runtime-handle bugs Provod. Сохранить как design/test prototype; возможный будущий unified IDs слой требует интеграции, snapshot+rekey rules, world/stream epochs и доказательства, а не include-only переноса.",
+      "integration_note": "Not a live implementation; preserve design/tests without treating it as a completed identity replacement.",
+      "donor_decision": "Do not treat this as a completed fix for all Provod runtime-handle bugs. Preserve as a design/test prototype. A unified ID layer still needs integration, snapshot/rekey rules, world/stream epochs and evidence beyond adding headers.",
       "runtime_status": "prototype-not-live",
       "commits": []
     }
